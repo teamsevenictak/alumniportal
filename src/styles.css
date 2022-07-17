@@ -413,3 +413,7 @@ body .slick-next {
     background: grey !important;
     z-index: 100;
 }
+a {
+    color: #00B074;
+    text-decoration: none;
+  }
