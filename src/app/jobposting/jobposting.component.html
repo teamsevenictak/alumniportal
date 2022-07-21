@@ -1,0 +1,68 @@
+<div class="container">
+<div class="col-md-12">
+    <br>
+    <h1 style="text-align: center; padding-top: 10px; color: green;">{{title}}</h1>
+    <form (ngSubmit)="NewJobs()">
+        <br>
+        <div class=" form-group">
+            <label for="jobrole" class="col-sm-3 control-label"><b>Company Name</b></label>
+            <input type="text" name="companyname" [(ngModel)]="jobItems.companyName"    class="form-control" placeholder="Company Name">
+        </div>
+        <div class=" form-group">
+            <label for="jobrole" class="col-sm-3 control-label"><b>Job Role</b></label>
+            <input type="text" name="jobrole"  [(ngModel)]="jobItems.jobRole"  class="form-control" placeholder="Job Role">
+        </div>
+        <div class=" form-group">
+            <label for="jobrole" class="col-sm-3 control-label"><b>Location</b></label>
+            <input type="text" name="location"  [(ngModel)]="jobItems.location"  class="form-control" placeholder="Location">
+        </div>
+        <div class=" form-group">
+            <label for="expRequired" class="col-sm-3 control-label"><b>Experience</b></label>
+            <input type="text" name="experience"  [(ngModel)]="jobItems.experience"   class="form-control" placeholder="Experience">
+        </div>
+        <div class=" form-group">
+            <label for="skills" class="col-sm-3 control-label"><b>Skills</b></label>
+            <input type="text" name="skills"  [(ngModel)]="jobItems.skills"  class="form-control" placeholder="Skills">
+        </div>
+        <div class=" form-group">
+            <label for="education" class="col-sm-3 control-label"><b>Qualification</b></label>
+            <input type="text" name="education"  [(ngModel)]="jobItems.qualification"  class="form-control" placeholder="Qualification">
+        </div>
+        <div class=" form-group">
+            <label for="jobDescription" class="col-sm-3 control-label"><b>Job Description</b></label>
+            <input type="text" name="jobDescription" [(ngModel)]="jobItems.jobDescription"   class="form-control" placeholder="Description">
+        </div>
+        <div class=" form-group">
+            <label for="jobDescription" class="col-sm-3 control-label"><b>Last Date</b></label>
+            <input type="date" name="lastdate"  [(ngModel)]="jobItems.lastDate"  class="form-control" placeholder="Last Date">
+        </div>    
+        <div class="form-group">
+            <label class="control-label col-sm-3"><b>Job Type</b></label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio"  name="jobType" [(ngModel)]="jobItems.jobType"  value="Internship" >Internship
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"  value="Full-Time">Part Time
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"  value="Full-Time">Full Time
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <button class="btn btn-success form-control"><strong>Post Job</strong></button>
+        </div>
+    </form>
+</div>
+</div>
+

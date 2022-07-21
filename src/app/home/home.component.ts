@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { JobPostingModel } from './jobposting.model';
+import { JobpostingService } from '../jobposting.service';
 
 @Component({
   selector: 'app-home',
@@ -6,28 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  slides = [
-    { img: '../../assets/img/carousel-1.jpg' },
-    { img: '../../assets/img/carousel-2.jpg' },
-    ];
-  slideConfig = { slidesToShow: 4, slidesToScroll: 4 };
- 
-  slickInit(e: any) {
-    console.log('slick initialized');
-  }
-  breakpoint(e: any) {
-    console.log('breakpoint');
-  }
-  afterChange(e: any) {
-    console.log('afterChange');
-  }
-  beforeChange(e: any) {
-    console.log('beforeChange');
-  }
 
-  constructor() { }
+  postajob : JobPostingModel [] |any;
+
+  constructor(public jobpostingService: JobpostingService) { }
 
   ngOnInit(): void {
+    this.jobpostingService.getJobs().subscribe((data)=>{
+      this.postajob=JSON.parse(JSON.stringify(data))
+    })
   }
 
 }
