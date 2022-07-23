@@ -155,13 +155,13 @@ async function main() {
   let transporter = nodemailer.createTransport({
     service: "gmail",   
     auth: {
-      user: 'wishgreeting2022@gmail.com',
+      user: 'teamsevenictak@gmail.com',
       pass: 'mckfxowcmhxcjpcd'
     },
   });
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'wishgreeting2022@gmail.com', // sender address
+    from: 'teamsevenictak@gmail.com', // sender address
     to: visitor.name+visitor.email, // list of receivers
     subject: visitor.subject, // Subject line
     text: visitor.message
