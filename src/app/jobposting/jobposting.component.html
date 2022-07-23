@@ -1,68 +1,126 @@
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+    <div class="container my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">{{title}}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-uppercase">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">{{title}}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Header End -->
 <div class="container">
-<div class="col-md-12">
-    <br>
-    <h1 style="text-align: center; padding-top: 10px; color: green;">{{title}}</h1>
-    <form (ngSubmit)="NewJobs()">
+    <div class="col-md-12">
         <br>
-        <div class=" form-group">
-            <label for="jobrole" class="col-sm-3 control-label"><b>Company Name</b></label>
-            <input type="text" name="companyname" [(ngModel)]="jobItems.companyName"    class="form-control" placeholder="Company Name">
-        </div>
-        <div class=" form-group">
-            <label for="jobrole" class="col-sm-3 control-label"><b>Job Role</b></label>
-            <input type="text" name="jobrole"  [(ngModel)]="jobItems.jobRole"  class="form-control" placeholder="Job Role">
-        </div>
-        <div class=" form-group">
-            <label for="jobrole" class="col-sm-3 control-label"><b>Location</b></label>
-            <input type="text" name="location"  [(ngModel)]="jobItems.location"  class="form-control" placeholder="Location">
-        </div>
-        <div class=" form-group">
-            <label for="expRequired" class="col-sm-3 control-label"><b>Experience</b></label>
-            <input type="text" name="experience"  [(ngModel)]="jobItems.experience"   class="form-control" placeholder="Experience">
-        </div>
-        <div class=" form-group">
-            <label for="skills" class="col-sm-3 control-label"><b>Skills</b></label>
-            <input type="text" name="skills"  [(ngModel)]="jobItems.skills"  class="form-control" placeholder="Skills">
-        </div>
-        <div class=" form-group">
-            <label for="education" class="col-sm-3 control-label"><b>Qualification</b></label>
-            <input type="text" name="education"  [(ngModel)]="jobItems.qualification"  class="form-control" placeholder="Qualification">
-        </div>
-        <div class=" form-group">
-            <label for="jobDescription" class="col-sm-3 control-label"><b>Job Description</b></label>
-            <input type="text" name="jobDescription" [(ngModel)]="jobItems.jobDescription"   class="form-control" placeholder="Description">
-        </div>
-        <div class=" form-group">
-            <label for="jobDescription" class="col-sm-3 control-label"><b>Last Date</b></label>
-            <input type="date" name="lastdate"  [(ngModel)]="jobItems.lastDate"  class="form-control" placeholder="Last Date">
-        </div>    
-        <div class="form-group">
-            <label class="control-label col-sm-3"><b>Job Type</b></label>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input type="radio"  name="jobType" [(ngModel)]="jobItems.jobType"  value="Internship" >Internship
-                        </label>
+        <form (ngSubmit)="joppostForm.form.valid && NewJobs()" #joppostForm="ngForm">
+            <div class="row g-3">
+                <div class="col-12 col-sm-6">            
+                    <input type="text" name="companyname" [(ngModel)]="jobItems.companyName" #companyname="ngModel"  class="form-control" placeholder="Company Name" [class.is-invalid]="companyname.invalid && joppostForm.submitted" required> 
+                    <div class="invalid-feedback">
+                        Please enter your companyName
                     </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"  value="Full-Time">Part Time
-                        </label>
+                </div>
+                <div class="col-12 col-sm-6">           
+                    <input type="text" name="jobrole"  [(ngModel)]="jobItems.jobRole" #jobrole="ngModel"  class="form-control" placeholder="Job Role" [class.is-invalid]="jobrole.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Please enter job role
                     </div>
-                    <div class="col-sm-4">
-                        <label class="radio-inline">
-                            <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"  value="Full-Time">Full Time
-                        </label>
+                </div>
+                <div class="col-12 col-sm-6">           
+                    <input type="text" name="companydetail"  [(ngModel)]="jobItems.companydetail" #companydetail="ngModel"  class="form-control" placeholder="companydetails" [class.is-invalid]="companydetail.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Please enter company details
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6"> 
+                    <select name="jobcategory" [(ngModel)]="jobItems.jobcategory" #jobcategory="ngModel"  class="form-control" placeholder="Job Category" [class.is-invalid]="jobcategory.invalid && joppostForm.submitted" required>
+                        <option value="" selected>Job category</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Cyber Security">Cyber Security</option>
+                        <option value="Human Resource">Human Resource</option>
+                        <option value="Project Management">Project Management</option>
+                        <option value="Full stack Development">Full stack Development</option>
+                        <option value="Software Testing">Software Testing</option>
+                        <option value="Robotics Process Automation">Robotics Process Automation</option>
+                        <option value="Design & Creative">Design & Creative</option>
+                    </select>         
+                    <div class="invalid-feedback">
+                        Job category required
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">           
+                    <input type="text" name="location"  [(ngModel)]="jobItems.location" #location="ngModel"  class="form-control" placeholder="Location" [class.is-invalid]="location.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Please enter job location
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">            
+                    <input type="number" name="experience"  [(ngModel)]="jobItems.experience" #experience="ngModel" class="form-control" placeholder="Experience" [class.is-invalid]="experience.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Job Experience Required
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">            
+                    <input type="text" name="skills"  [(ngModel)]="jobItems.skills" #skills="ngModel" class="form-control" placeholder="Skills" [class.is-invalid]="skills.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Skills Required
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">            
+                    <input type="text" name="education"  [(ngModel)]="jobItems.qualification" #education="ngModel"  class="form-control" placeholder="Qualification" [class.is-invalid]="education.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Please enter required qualification
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">           
+                    <input type="text" name="jobDescription" [(ngModel)]="jobItems.jobDescription" #jobDescription="ngModel" class="form-control" placeholder="Description" [class.is-invalid]="jobDescription.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Job description required
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">           
+                    <input type="date" name="lastdate"  [(ngModel)]="jobItems.lastDate" #lastdate="ngModel" class="form-control" placeholder="Last Date" [class.is-invalid]="lastdate.invalid && joppostForm.submitted" required>
+                    <div class="invalid-feedback">
+                        Last date for application submission required
+                    </div>
+                </div>    
+                <div class="col-12">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio"  name="jobType" [(ngModel)]="jobItems.jobType" #jobType="ngModel" value="Internship" [class.is-invalid]="jobType.invalid && joppostForm.submitted" required>Internship
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"   value="Part-Time">Part Time
+                                </label>                        
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" checked  name="jobType"  [(ngModel)]="jobItems.jobType"  value="Full-Time">Full Time
+                                </label>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please select any of these options
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="form-group">
-            <button class="btn btn-success form-control"><strong>Post Job</strong></button>
-        </div>
-    </form>
-</div>
-</div>
-
+            <br>
+            <div class="form-group">
+                <button class="btn btn-primary w-100"><strong>Post Job</strong></button>
+            </div>
+            <div class="alert alert-success" *ngif="success">
+                {{this.successmsg}}
+            </div>
+        </form>
+    </div>
+    </div>
+    
+    

@@ -6,15 +6,20 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class JobpostingService {
+  jobDetails:any;
+  server_address : String = `http://localhost:5000`;
 
   constructor(public http: HttpClient) { }
 
   getJobs(){
-    return this.http.get('http://localhost:3000/postajob')
+    return this.http.get(`${this.server_address}/postajob`)
   }
 
   addJobs(item:any){
-    return this.http.post('http://localhost:3000/addJob',{item})
-    .subscribe(data=>{console.log(data)})
+    return this.http.post(`${this.server_address}/addJob`,{item});
+    
+  }
+  getJobById(JobId: any){
+    return this.http.get(`${this.server_address}/jobdetail/`+JobId);
   }
 }

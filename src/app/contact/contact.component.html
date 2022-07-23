@@ -50,34 +50,49 @@
             </div>
             <div class="col-md-6">
                 <div class="wow fadeInUp" data-wow-delay="0.5s">
-                    <form>
+                    <form  (ngSubmit)="contactForm.form.valid && contact()"  #contactForm="ngForm"> 
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                    <input type="text" class="form-control" placeholder="Your Name" [(ngModel)]="Visitor.name" name="name" #name="ngModel" [class.is-invalid]="name.invalid && contactForm.submitted" required>
                                     <label for="name">Your Name</label>
+                                    <div class="invalid-feedback">
+                                        Name is required
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                    <input type="email" class="form-control"  pattern="^[a-zA-Z0-9.%+]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"  [(ngModel)]="Visitor.email" name="email" #email="ngModel" [class.is-invalid]="email.invalid && contactForm.submitted" required placeholder="Your Email">
                                     <label for="email">Your Email</label>
+                                    <div class="invalid-feedback">
+                                        Please enter Email ID.
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    <input type="text" class="form-control" [(ngModel)]="Visitor.subject" name="subject" #subject="ngModel" [class.is-invalid]="subject.invalid && contactForm.submitted" required placeholder="Subject">
                                     <label for="subject">Subject</label>
+                                    <div class="invalid-feedback">
+                                        Subject Required
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
+                                    <textarea class="form-control" placeholder="Leave a message here" [(ngModel)]="Visitor.message" name="message" #message="ngModel" [class.is-invalid]="message.invalid && contactForm.submitted" required style="height: 150px"></textarea>
                                     <label for="message">Message</label>
+                                    <div class="invalid-feedback">
+                                        Please enter your Message
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                            </div>
+                            <div class="alert alert-success" role="alert" *ngIf="status">
+                                {{this.success}}
                             </div>
                         </div>
                     </form>

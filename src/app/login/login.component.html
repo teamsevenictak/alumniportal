@@ -1,0 +1,55 @@
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+    <div class="container my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">{{title}}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-uppercase">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">{{title}}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="container-xxl py-5">
+    <div class="container">
+      <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">{{title}}</h1>
+        <div class="row g-4">
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
+            </div>
+            <div class="col-md-6">
+                <div class="wow fadeInUp" data-wow-delay="0.5s">
+                    <form (ngSubmit)="userVerify()" #loginForm="ngForm" class="row g-3 needs-validation">
+                        <div class="col-md-8 mx-auto">
+                            <label for="username" class="form-label">User name</label>
+                            <input type="email" class="form-control" pattern="^[a-z0-9.%+]+@[a-z0-9.-]+\.[a-z]{2,4}"  [(ngModel)]="loginuser.email" name="username" #email="ngModel" [class.is-invalid]="loginForm.submitted && email.invalid" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-8 mx-auto">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" [(ngModel)]="loginuser.password" name="password" minlength="6" #password="ngModel" [class.is-invalid]="loginForm.submitted && password.invalid" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>    
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 py-3">Submit</button>
+                        </div>
+                        <div class="alert alert-danger" *ngIf="loginForm.submitted && islogErr">
+                            Invalid Login Credentials
+                        </div>
+                <div class="flex-col-c p-t-170 p-b-40">
+                    <span class="txt1 p-b-9">
+                        Don’t have an account?
+                    </span>
+
+                    <a routerLink="/signup" class="txt3">
+                        Sign up now
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
