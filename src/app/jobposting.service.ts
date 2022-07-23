@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class JobpostingService {
   jobDetails:any;
-  server_address : String = `http://localhost:5000`;
+  server_address : String = `api`;
 
   constructor(public http: HttpClient) { }
 

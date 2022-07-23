@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  server_address :  String = `http://localhost:5000`;
+  server_address :  String = `api`;
   constructor(public http:HttpClient) { }
   userVerify(user:any){
     return this.http.post<any>(`${this.server_address}/login`,user);
