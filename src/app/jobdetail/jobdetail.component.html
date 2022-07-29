@@ -44,9 +44,9 @@
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Job Category: {{jobItems.jobcategory}}</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: {{jobItems.jobcategory}}</p>
+                    <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: {{jobItems.jobType}}</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Location: {{jobItems.location}}</p>
-                    <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: {{jobItems.jobType}}</p>
+                    <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: {{jobItems.lastDate}}</p>
                 </div>
                 <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
                     <h4 class="mb-4">Company Detail</h4>
@@ -57,3 +57,4 @@
     </div>
 </div>
 <!-- Job Detail End -->
+<app-applynow *ngIf="_auth.isalumni() && !isCutoffOver"></app-applynow>

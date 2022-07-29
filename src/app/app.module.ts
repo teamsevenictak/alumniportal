@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,9 @@ import { FacultyComponent } from './faculty/faculty.component';
 import { AuthService } from './auth.service';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { LoggedheaderComponent } from './loggedheader/loggedheader.component';
+import { SubmissionComponent } from './submission/submission.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ApplynowComponent } from './applynow/applynow.component';
 
 @NgModule({
   declarations: [
@@ -38,14 +41,19 @@ import { LoggedheaderComponent } from './loggedheader/loggedheader.component';
     SignupComponent,
     LoginComponent,
     FacultyComponent,
-    LoggedheaderComponent
+    LoggedheaderComponent,
+    SubmissionComponent,
+    ApplynowComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
+
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [JobpostingService,AuthService,
     {
       provide:HTTP_INTERCEPTORS,

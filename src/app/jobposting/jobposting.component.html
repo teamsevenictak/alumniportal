@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">           
-                    <input type="date" name="lastdate"  [(ngModel)]="jobItems.lastDate" #lastdate="ngModel" class="form-control" placeholder="Last Date" [class.is-invalid]="lastdate.invalid && joppostForm.submitted" required>
+                    <input type="date" name="lastdate" class="lastdate"  [(ngModel)]="jobItems.lastDate" #lastdate="ngModel" class="form-control" placeholder="Last Date" [class.is-invalid]="lastdate.invalid && joppostForm.submitted" [min]="2022-07-30" required>
                     <div class="invalid-feedback">
                         Last date for application submission required
                     </div>

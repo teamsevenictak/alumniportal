@@ -25,20 +25,32 @@ export class SignupComponent implements OnInit {
   isSuccessful = false;
   errorMessage = '';
   passwordErr = false;
-
+  isEmailErr= false;
   ngOnInit(): void {
   }
   userSignup() { 
+    this.isEmailErr= false;
+    this.passwordErr = false;
     if(this.User.password != this.confirmPassword)
     {
       this.passwordErr = true ;
     }
     else{
       this.passwordErr = false ;
-      this.auth.register(this.User).subscribe((data)=>{          
+      this.auth.register(this.User).subscribe({
+         next: (data:any) =>  {          
         var userregister = JSON.parse(JSON.stringify(data));
+        console.log(data);
         this.isSuccessful = true;        
-        this.router.navigate(['/login']);     
+        this.router.navigate(['/login']); 
+         } ,  
+         error: (err) => { 
+          if(err.error.message=='Email Already exists in our system'){
+          this.isEmailErr = true;
+        }  
+      }
+        
+          
       })
     }    
     

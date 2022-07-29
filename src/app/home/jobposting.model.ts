@@ -10,6 +10,6 @@ export class JobPostingModel{
     public qualification: String,
     public jobDescription: String,
     public lastDate: String,
-    public jobType: String
+    public jobType: String,
     ) {}
 }

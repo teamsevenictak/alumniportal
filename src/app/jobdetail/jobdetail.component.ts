@@ -13,9 +13,25 @@ export class JobdetailComponent implements OnInit {
   
   jobItems = new JobPostingModel("","","","","",0,"","","","","");
   constructor(public jobpostingService: JobpostingService,public _auth:AuthService) { }
-
+  today :Date= new Date();
+  lastDate:Date= new Date();
+  isCutoffOver :Boolean=false;
   ngOnInit(): void {
     this.jobItems = this.jobpostingService.jobDetails;
+    if(this.jobItems==undefined){
+      var  jobId = localStorage.getItem('jobID');
+      this.jobpostingService.getJobById(jobId).subscribe((data)=>{
+       
+        var jobDetail = JSON.parse(JSON.stringify(data));
+        this.lastDate = jobDetail.lastDate;
+        console.log(this.lastDate);
+        this.jobItems = jobDetail;      
+        if(this.lastDate<this.today)   {
+          this.isCutoffOver = true;
+        }
+      });
+      
+    }console.log(this.today+'last'+this.lastDate+'over'+this.isCutoffOver);
   }
  
 

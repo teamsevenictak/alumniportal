@@ -12,7 +12,9 @@ import { JobdetailComponent } from './jobdetail/jobdetail.component';
 import { JoblistingComponent } from './joblisting/joblisting.component';
 import { JobpostingComponent } from './jobposting/jobposting.component';
 import { LoginComponent } from './login/login.component';
+import { RoleGuard } from './role.guard';
 import { SignupComponent } from './signup/signup.component';
+import { SubmissionComponent } from './submission/submission.component';
 import { TestimonialComponent } from './testimonial/testimonial.component';
 
 
@@ -24,14 +26,16 @@ const routes: Routes = [
   
   {path:'postajob',  canActivate: [AuthGuard], component:JobpostingComponent},
   {path:'jobdetail', component:JobdetailComponent,
-children:[{path:'applynow',  canActivate: [AuthGuard], component:ApplynowComponent}]},
+children:[{path:'applynow', canActivate: [RoleGuard], component:ApplynowComponent,data: {   role: 'user_alumni' }}]},
   {path:'joblisting', component:JoblistingComponent},
   {path:'signup', component:SignupComponent},
   {path:'login', component:LoginComponent},
-  {path:'alumni',  canActivate: [AuthGuard], component:AlumniComponent},
-  {path:'faculty',  canActivate: [AuthGuard], component:FacultyComponent},
-  {path:'faculty',  canActivate: [AuthGuard], component:FacultyComponent},
-  {path:'applynow',  canActivate: [AuthGuard], component:ApplynowComponent},
+  {path:'alumni',  canActivate: [RoleGuard], component:AlumniComponent,data: {   role: 'user_alumni' }},
+  {path:'faculty',  canActivate: [RoleGuard], component:FacultyComponent,data: {   role: 'user_faculty' }},
+  {path:'employee',  canActivate: [RoleGuard], component:FacultyComponent,data: {   role: 'user_faculty' }},
+  {path:'admin',  canActivate: [RoleGuard], component:FacultyComponent, data: {   role: 'user_admin' }},
+  {path:'applynow',  canActivate: [RoleGuard], component:ApplynowComponent,data: {   role: 'user_alumni' }},
+  {path:'submission',  canActivate: [AuthGuard], component:SubmissionComponent}
  
   
 ];

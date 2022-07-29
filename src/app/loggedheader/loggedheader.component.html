@@ -9,16 +9,8 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="/" class="nav-item nav-link active">Home</a>
-            <a routerLink="/about" class="nav-item nav-link">About</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
-                <div class="dropdown-menu rounded-0 m-0">
-                    <a routerLink="/joblisting"  class="dropdown-item">Job List</a>
-                    <!-- <a routerLink="/job-detail" class="dropdown-item">Job Detail</a> -->
-                </div>
-            </div>
             <a routerLink="postajob" class="nav-item nav-link">Post a Job</a>
-            <a routerLink="contact" class="nav-item nav-link">Contact</a>
+            <a routerLink="submission" class="nav-item nav-link" *ngIf="_auth.HaveAdminAccess()">View Applications</a>
         </div>
         <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" type="submit" routerLink="/" (click)="logoutUser()"  *ngIf="_auth.loggedIn()">Logout</a>
         <a routerLink="/signup" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" *ngIf="!_auth.loggedIn()">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>

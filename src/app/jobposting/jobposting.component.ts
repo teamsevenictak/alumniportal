@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { JobPostingModel } from '../home/jobposting.model';
 import { JobpostingService } from '../jobposting.service';
 import { Router } from '@angular/router';
-
-
-
+import { AuthService } from '../auth.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-jobposting',
   templateUrl: './jobposting.component.html',
@@ -14,14 +13,26 @@ export class JobpostingComponent implements OnInit {
 
   title:String = "Post a New Job";
 
-  jobItems = new JobPostingModel("","","","","",0,"","","","","");
 
-  constructor(public jobpostingService : JobpostingService, public router:Router) { }
+  constructor(public jobpostingService : JobpostingService,private _auth:AuthService, public router:Router,public datepipe: DatePipe) { }
   jobadded: String='';
   successmsg:String='';
   success : boolean=false;
+   today :Date= new Date();
+  userId = this._auth.getLoggedUserID();
   ngOnInit(): void {
+    var dd = this.today.getDate();
+    var mm = this.today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+    var yyyy = this.today.getFullYear();
+    
+    var min_today = yyyy+'-'+mm+'-'+dd;
+    //document.getElementById("lastdate").setAttribute("min", min_today);
+    this.userId = this._auth.getLoggedUserID();
+
   }
+ // console.log(userId: any);
+  jobItems = new JobPostingModel("","","","","",0,"","","","","");
+
    NewJobs(){
     this.jobpostingService.addJobs(this.jobItems).
     subscribe((data)=>{
@@ -29,7 +40,7 @@ export class JobpostingComponent implements OnInit {
       this.successmsg = jopadded.message;
       this.success = true;
     });
-    alert('New job added');
+    
     this.router.navigate(['/']);
 
    }

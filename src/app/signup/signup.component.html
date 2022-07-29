@@ -20,7 +20,7 @@
           </div>
           <div class="col-md-6">
               <div class="wow fadeInUp" data-wow-delay="0.5s">
-                  <form (ngSubmit)="userSignup()" #signupForm="ngForm" class="row g-3 needs-validation">
+                  <form (ngSubmit)="signupForm.form.valid && userSignup()" #signupForm="ngForm" class="row g-3 needs-validation">
                       <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -43,6 +43,9 @@
                                 <label for="email">Email</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid Email.
+                                </div>                                
+                                <div class="alert alert-danger" *ngIf="signupForm.submitted && isEmailErr">
+                                    Email already exists.
                                 </div>
                             </div>
                         </div>
@@ -95,9 +98,17 @@
                   </form>
                   <div class="alert alert-success" *ngIf="isSuccessful">
                     Your registration is successful! You can now login with your email and password.
-                </div>
-                
-              </div>
+                </div>               
+              </div><br>
+              <div class="flex-col-c p-t-170 p-b-40">
+                <span class="txt1 p-b-9">
+                   Already Registered?
+                </span>
+
+                <a routerLink="/login" class="txt3">
+                    Login
+                </a>
+            </div>
           </div>
       </div>
   </div>
