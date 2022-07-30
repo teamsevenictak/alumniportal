@@ -10,6 +10,8 @@ const Applyjob = new Schema({
     link        :  String,
     postID      :  String,
     AlumnId     :  String,
+    Dateofsub   :  Date,
+    Visibility:Number
 })
 const applyjob = mongoose.model('applied',Applyjob);
 module.exports = applyjob;
