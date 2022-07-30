@@ -3,6 +3,7 @@ const express = require ('express');
 
 const Postjob = require('./src/model/PostjobsModel');
 const UserDetail = require("./src/model/UserModel");
+const Applyjob = require("./src/model/Applyjobs.js");
 const cors = require ('cors');
 const bodyParser = require ('body-parser');
 const nodemailer = require("nodemailer");
@@ -72,22 +73,24 @@ app.post("/resume-upload", (req, res) => {
     else{
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
-
+      dateofsub = new Date();
       var applyjobs = {
           name: req.body.name,
           link: link_posted,
           postID: req.body.postID,
-          AlumnId: req.body.alumniID
+          AlumnId: req.body.alumniID,
+          Dateofsub:dateofsub,
+          Visibility:0
       }
   
-      var job = new Postjob(jobs)
+      var job = new Applyjob(applyjobs)
       job.save()
       .then(job => {
           
-          res.status(200).json({'job': 'New job added successfully'});
+          res.status(200).json({'job': 'New Application submitted successfully'});
       })
       .catch(err => {
-          res.status(400).send('adding new job failed');
+          res.status(400).send('Apllication submission failed');
       });
     }
     res.status(200).send({ message: `${newpath}${filename}`, code: 200 });
@@ -117,7 +120,8 @@ function verifyToken(req,res,next){
 
 function LoggedUserID(req,res){
   let token = req.headers.authorization.split(' ')[1];
-  if(token=='null'){
+  console.log(token);
+  if(token!='null'){
     let payload = jwt.verify(token,'secretKey');
     return req.userId = payload.subject.id;
   }
@@ -157,7 +161,15 @@ app.post('/login', (req, res) => {
       
     }  
 })
-app.get('/postajob',function(req,res){
+app.get('/getapplicatins',function(req,res){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+  Applyjob.find()
+  .then(function(applyjob){
+      res.send(applyjob);
+  })
+})
+app.get('/postajob',verifyToken,function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
     
@@ -169,7 +181,7 @@ app.get('/postajob',function(req,res){
 app.get('/postsbyuser',verifyToken,function(req,res){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
-  id = LoggedUserID();
+  //id = LoggedUserID();
   Postjob.findById({"_id":id})
   .then(function(posts){
     console.log(posts);
@@ -215,6 +227,27 @@ app.get('/jobdetail/:id',(req, res) => {
       res.status(400).send('fetching job detail failed');
   });
 
+})
+
+app.put('/updateapplicatin',verifyToken, (req, res) => {
+  id  = req.body.Appid;
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+    
+ 
+//var book = new BooksList(book);
+//book.save;  
+ // let books = new BooksList(book);
+ Applyjob.findByIdAndUpdate({"_id":id},{$set:{
+  "Visibility":0
+
+  }})
+      .then(book => {
+          res.status(200).json({'book': 'book details updated successfully'});
+      })
+      .catch(err => {
+          res.status(400).send('book updation failed');
+      });
 })
 app.post('/sendEmail', function (req, res) {
     // async..await is not allowed in global scope, must use a wrapper
