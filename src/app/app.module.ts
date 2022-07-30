@@ -25,6 +25,7 @@ import { LoggedheaderComponent } from './loggedheader/loggedheader.component';
 import { SubmissionComponent } from './submission/submission.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApplynowComponent } from './applynow/applynow.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ApplynowComponent } from './applynow/applynow.component';
     LoggedheaderComponent,
     SubmissionComponent,
     ApplynowComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

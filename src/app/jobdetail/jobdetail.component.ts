@@ -23,8 +23,7 @@ export class JobdetailComponent implements OnInit {
     if(this.jobItems==undefined){
        this.jobId = this.jobpostingService.selectedId;//localStorage.getItem('jobID');
       this.jobpostingService.selectedId = this.jobId;
-      this.jobpostingService.getJobById(this.jobId).subscribe((data)=>{
-        
+      this.jobpostingService.getJobById(this.jobId).subscribe((data)=>{        
         var jobDetail = JSON.parse(JSON.stringify(data));
         this.lastDate = jobDetail.lastDate;
         console.log(this.lastDate);

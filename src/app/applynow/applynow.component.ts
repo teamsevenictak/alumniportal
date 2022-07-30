@@ -13,12 +13,12 @@ export class ApplynowComponent implements OnInit {
 
 
   @Input()
-  requiredFileType!: string;
   Alumni  = 
   { name : '',
   filelink     : '',
   postID   :'',
-  AlumnId  :''
+  AlumnId  :'',
+  Dateofsub:''
 
  }
   fileName = '';

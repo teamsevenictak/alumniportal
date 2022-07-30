@@ -33,6 +33,12 @@ export class JobpostingService {
   getJobById(JobId: any){
     return this.http.get(`${this.server_address}/jobdetail/`+JobId);
   }
+  getApplications(){
+    return this.http.get(`${this.server_address}/getapplicatins`);
+  }
+  updateById(Appid:any){
+    return this.http.put(`${this.server_address}/updateapplicatin`,{Appid:Appid});
+  }
   upload(file:File,application:any)  {
     var formData = new FormData();
     formData.append("resume", file);

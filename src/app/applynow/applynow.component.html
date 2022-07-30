@@ -22,7 +22,7 @@
       <div class="col-8 ">
           <label for="resume" style="padding:5px 5px ;">Upload Resume</label>
           <input type="file" class="file-input"
-       [accept]="requiredFileType"
+       accept="application/pdf"
        (change)="onFileSelected($event)" #fileUpload>      
       </div>
       <br>

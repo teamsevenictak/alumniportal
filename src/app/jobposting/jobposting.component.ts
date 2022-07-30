@@ -12,9 +12,8 @@ import { DatePipe } from '@angular/common';
 export class JobpostingComponent implements OnInit {
 
   title:String = "Post a New Job";
-
-
-  constructor(public jobpostingService : JobpostingService,private _auth:AuthService, public router:Router,public datepipe: DatePipe) { }
+   jobItems = new JobPostingModel("","","","","",0,"","","","","");
+  constructor(public jobpostingService : JobpostingService,private _auth:AuthService, public router:Router) { }
   jobadded: String='';
   successmsg:String='';
   success : boolean=false;
@@ -23,15 +22,14 @@ export class JobpostingComponent implements OnInit {
   ngOnInit(): void {
     var dd = this.today.getDate();
     var mm = this.today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-    var yyyy = this.today.getFullYear();
-    
+    var yyyy = this.today.getFullYear();    
     var min_today = yyyy+'-'+mm+'-'+dd;
     //document.getElementById("lastdate").setAttribute("min", min_today);
-    this.userId = this._auth.getLoggedUserID();
+    //this.userId = this._auth.getLoggedUserID();
 
   }
  // console.log(userId: any);
-  jobItems = new JobPostingModel("","","","","",0,"","","","","");
+ 
 
    NewJobs(){
     this.jobpostingService.addJobs(this.jobItems).

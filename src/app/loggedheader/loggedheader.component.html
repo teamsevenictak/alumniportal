@@ -10,7 +10,8 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="/" class="nav-item nav-link active">Home</a>
             <a routerLink="postajob" class="nav-item nav-link">Post a Job</a>
-            <a routerLink="submission" class="nav-item nav-link" *ngIf="_auth.HaveAdminAccess()">View Applications</a>
+            <a routerLink="myjobs" class="nav-item nav-link">Jobs Posted</a>
+            <a routerLink="submission" class="nav-item nav-link" *ngIf="_auth.HaveAdminAccess() || _auth.HaveEmployeeAcess()">View Applications</a>
         </div>
         <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" type="submit" routerLink="/" (click)="logoutUser()"  *ngIf="_auth.loggedIn()">Logout</a>
         <a routerLink="/signup" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" *ngIf="!_auth.loggedIn()">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>
