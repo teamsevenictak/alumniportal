@@ -58,14 +58,39 @@ app.post('/register', (req, res) => {
 })
 app.post("/resume-upload", (req, res) => {
   const newpath = __dirname + "/files/";
-  const file = req.files.file;
-  const filename = file.name;
-  console.log(file);
+  const file = req.files.resume;  
+  timestamp = new Date().getTime().toString();
+  const filename = timestamp+file.name;
+  link_posted = req.body.filelink;
+  if(link_posted==''){
+    link_posted = `${newpath}${filename}`;
+  }
   file.mv(`${newpath}${filename}`, (err) => {
     if (err) {
       res.status(500).send({ message: "File upload failed", code: 200 });
     }
-    res.status(200).send({ message: "File Uploaded", code: 200 });
+    else{
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+
+      var applyjobs = {
+          name: req.body.name,
+          link: link_posted,
+          postID: req.body.postID,
+          AlumnId: req.body.alumniID
+      }
+  
+      var job = new Postjob(jobs)
+      job.save()
+      .then(job => {
+          
+          res.status(200).json({'job': 'New job added successfully'});
+      })
+      .catch(err => {
+          res.status(400).send('adding new job failed');
+      });
+    }
+    res.status(200).send({ message: `${newpath}${filename}`, code: 200 });
   });
 });
 //username= "admin";
