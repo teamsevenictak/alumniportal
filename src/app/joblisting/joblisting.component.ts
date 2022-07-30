@@ -24,7 +24,7 @@ export class JoblistingComponent implements OnInit {
     this.jobpostingService.getJobById(jobId).subscribe((data)=>{
       var jobDetail = JSON.parse(JSON.stringify(data));
       this.jobpostingService.jobDetails = jobDetail; 
-      
+      this.jobpostingService.selectedId = jobId;
       localStorage.setItem('jobID',jobId);
       this.router.navigate(['/jobdetail']); 
     })

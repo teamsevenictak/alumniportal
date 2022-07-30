@@ -12,6 +12,8 @@ import { JobpostingService } from '../jobposting.service';
 export class JobdetailComponent implements OnInit {
   
   jobItems = new JobPostingModel("","","","","",0,"","","","","");
+  selectedId  :string='';
+  jobId       :string='';
   constructor(public jobpostingService: JobpostingService,public _auth:AuthService) { }
   today :Date= new Date();
   lastDate:Date= new Date();
@@ -19,9 +21,10 @@ export class JobdetailComponent implements OnInit {
   ngOnInit(): void {
     this.jobItems = this.jobpostingService.jobDetails;
     if(this.jobItems==undefined){
-      var  jobId = localStorage.getItem('jobID');
-      this.jobpostingService.getJobById(jobId).subscribe((data)=>{
-       
+       this.jobId = this.jobpostingService.selectedId;//localStorage.getItem('jobID');
+      this.jobpostingService.selectedId = this.jobId;
+      this.jobpostingService.getJobById(this.jobId).subscribe((data)=>{
+        
         var jobDetail = JSON.parse(JSON.stringify(data));
         this.lastDate = jobDetail.lastDate;
         console.log(this.lastDate);

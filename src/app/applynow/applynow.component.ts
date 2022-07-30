@@ -14,11 +14,21 @@ export class ApplynowComponent implements OnInit {
 
   @Input()
   requiredFileType!: string;
+  Alumni  = 
+  { name : '',
+  filelink     : '',
+  postID   :'',
+  AlumnId  :''
 
+ }
   fileName = '';
   uploadProgress!: number;
   uploadSub: Subscription = new Subscription;
   file!: File;
+  shortLink:string='';
+  loading:Boolean=false;
+  isUploaderr:Boolean=false;
+  isSuccessful:Boolean=false;
   constructor(private http: HttpClient,public jobpostingService: JobpostingService, public router:Router) {}
   ngOnInit(): void {
   }
@@ -28,13 +38,27 @@ export class ApplynowComponent implements OnInit {
       
 upload(){
   if (this.file) {
+    this.loading = !this.loading;
     this.fileName = this.file.name; 
-    this.uploadSub = this.jobpostingService.upload(this.file).subscribe(event => {
-      if (event.type == HttpEventType.UploadProgress) {
-        console.log(event);
-       // this.uploadProgress = Math.round(100 * (event.loaded / event.total));
-      }
-    })
+    this.Alumni.postID = this.jobpostingService.selectedId;
+    this.uploadSub = this.jobpostingService.upload(this.file,this.Alumni).subscribe({
+      next: (data:any) =>  {   
+        var filelink = JSON.parse(JSON.stringify(data));
+        this.shortLink = filelink.message;
+        console.log( this.shortLink);
+        this.loading = false;
+        this.isSuccessful=true;
+        this.isUploaderr =false;
+      } ,  
+      error: (err) => { 
+       if(err.error.message!=''){
+       this.isUploaderr = true;
+     }  
+   }
+    }
+
+      
+    )
 }
 }
 cancelUpload() {

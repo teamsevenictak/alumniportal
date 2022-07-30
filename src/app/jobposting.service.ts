@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'; 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 
 
@@ -11,6 +11,9 @@ export class JobpostingService {
   jobDetails:any;
   server_address : String = `http://localhost:5000`;// `api`;
   userId : String='';
+  uploadProgress :Number=0;
+  uploadSub!: Subscription;
+  selectedId: string ='';
 
   constructor(public http: HttpClient,private _auth:AuthService) { }
 
@@ -30,10 +33,15 @@ export class JobpostingService {
   getJobById(JobId: any){
     return this.http.get(`${this.server_address}/jobdetail/`+JobId);
   }
-  upload(file:File)  {
-    const formData = new FormData();
+  upload(file:File,application:any)  {
+    var formData = new FormData();
     formData.append("resume", file);
-    return this.http.post("/resume-upload", formData, {
+    formData.append("name", application.name);
+    formData.append("filelink", application.filelink);
+    formData.append("alumniID",  this._auth.getLoggedUserID());
+    //var  jobId = localStorage.getItem('jobID');
+    formData.append("jobId", this.selectedId);
+    return this.http.post(`${this.server_address}/resume-upload`, formData, {
       reportProgress: true,
       observe: 'events'
   })
@@ -41,5 +49,14 @@ export class JobpostingService {
       //finalize(() => this.reset())
   );
     
+  }
+  cancelUpload() {
+    this.uploadSub.unsubscribe();
+    this.reset();
+  }
+
+  reset() {
+    this.uploadProgress = 0;
+    this.uploadSub.unsubscribe();
   }
 }
