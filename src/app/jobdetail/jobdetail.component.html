@@ -41,8 +41,8 @@
             <div class="col-lg-4">
                 <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
                     <h4 class="mb-4">Job Summery</h4>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
+                    <!-- <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p>
+                    <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p> -->
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Job Category: {{jobItems.jobcategory}}</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: {{jobItems.jobType}}</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Location: {{jobItems.location}}</p>
@@ -56,5 +56,11 @@
         </div>
     </div>
 </div>
+<div class="alert alert-success" *ngIf="isApplied">
+    Your have already applied for this post.
+</div>
 <!-- Job Detail End -->
-<app-applynow *ngIf="_auth.isalumni() && !isCutoffOver"></app-applynow>
+<div class="alert-danger px-5 pt-1 pb-1" *ngIf="_auth.isalumni() && isCutoffOver && !isApplied">
+    Last date of submission over.
+</div>
+<app-applynow *ngIf="_auth.isalumni() && !isCutoffOver && !isApplied"></app-applynow>

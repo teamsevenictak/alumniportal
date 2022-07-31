@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JobPostingModel } from '../home/jobposting.model';
 import { JobpostingService } from '../jobposting.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class JoblistingComponent implements OnInit {
   postajob : JobPostingModel [] |any;
-  constructor(public jobpostingService: JobpostingService, public router:Router) { }
+  verifiedpost:Boolean =false;
+  constructor(public jobpostingService: JobpostingService, public router:Router,public _auth:AuthService) { }
 
 
   ngOnInit(): void {
@@ -27,6 +29,17 @@ export class JoblistingComponent implements OnInit {
       this.jobpostingService.selectedId = jobId;
       localStorage.setItem('jobID',jobId);
       this.router.navigate(['/jobdetail']); 
+    })
+   }
+   verifyPost(post:any)
+   {
+    var  PostId = post._id;
+    this.jobpostingService.verifyById(PostId).subscribe((data)=>{
+      var verified = JSON.parse(JSON.stringify(data));
+      if(verified.verify == 'Post sent successfully')
+      {
+        this.verifiedpost = true;
+      }
     })
    }
 }

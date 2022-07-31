@@ -16,12 +16,17 @@
                                     <span class="text-truncate me-0"><i class="fa fa-briefcase text-primary me-2"></i>{{i.experience}}</span>
                                     <span class="text-truncate me-0"><i class="fa fa-trophy text-primary me-2"></i>{{i.qualification}}</span>
                                     <span class="text-truncate me-0"><i class="fa fa-lightbulb text-primary me-2"></i>{{i.skills}}</span>
+                                    <span class="text-truncate me-0" *ngIf="i.verified==1 && _auth.HaveEmployeeAcess()"><br>&#10003; Verified</span>
+                                    <br><br><span style="color:red;" *ngIf="i.verified==0 && _auth.HaveEmployeeAcess()">Will be posted once approved by admin</span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-3">
-                                    <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
                                     <a class="btn btn-primary" (click)="viewDetail(i)">View Details</a>
+                                </div>
+                                <span style="color:green;font-size:20px;" *ngIf="(i.verified==1 || verifiedpost) && _auth.HaveAdminAccess()"><br>&#10003; Verified</span>
+                                <div class="d-flex mb-3" *ngIf="i.verified==0">
+                                    <a class="btn btn-primary" *ngIf="_auth.HaveAdminAccess() && !verifiedpost" (click)="verifyPost(i)">Verify</a>
                                 </div>
                                 <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Last Date:{{i.lastDate}}</span>
                             </div>

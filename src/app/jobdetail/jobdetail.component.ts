@@ -11,29 +11,59 @@ import { JobpostingService } from '../jobposting.service';
 })
 export class JobdetailComponent implements OnInit {
   
-  jobItems = new JobPostingModel("","","","","",0,"","","","","");
+  jobItems = new JobPostingModel("","","","","",0,"","","","","","",1);
   selectedId  :string='';
   jobId       :string='';
+  emplyId     :string='';  
   constructor(public jobpostingService: JobpostingService,public _auth:AuthService) { }
   today :Date= new Date();
   lastDate:Date= new Date();
   isCutoffOver :Boolean=false;
+  isApplied:Boolean=false;
   ngOnInit(): void {
     this.jobItems = this.jobpostingService.jobDetails;
     if(this.jobItems==undefined){
-       this.jobId = this.jobpostingService.selectedId;//localStorage.getItem('jobID');
-      this.jobpostingService.selectedId = this.jobId;
-      this.jobpostingService.getJobById(this.jobId).subscribe((data)=>{        
+      const  jobsID = localStorage.getItem('jobID');
+      //this.jobpostingService.selectedId = jobsID;    
+      this.jobpostingService.getJobById(jobsID).subscribe((data)=>{        
         var jobDetail = JSON.parse(JSON.stringify(data));
         this.lastDate = jobDetail.lastDate;
-        console.log(this.lastDate);
-        this.jobItems = jobDetail;      
-        if(this.lastDate<this.today)   {
+        this.jobpostingService.emplyId    =  jobDetail.emplyId;
+        this.jobItems = jobDetail; 
+       
+        const lastDate = new Date(this.lastDate);
+        console.log(lastDate.getTime() )     ;
+        console.log(this.today.getTime());
+        if (lastDate.getTime() < this.today.getTime()){
           this.isCutoffOver = true;
         }
       });
       
-    }console.log(this.today+'last'+this.lastDate+'over'+this.isCutoffOver);
+    }
+    else {
+      //const lastDate = new Date(this.jobItems.lastDate);
+     
+     // console.log(lastDate.getTime());
+     // console.log(this.today.getTime());
+      //if(lastDate < this.today)
+      {
+
+      }
+    }
+    //check if already applied
+    if(this._auth.isalumni()){
+      const userId = this._auth.getLoggedUserID();
+      const app={
+        "postID":this.jobpostingService.selectedId,
+        "AlumnId":userId
+            } 
+      this.jobpostingService.getApplicationById(app).subscribe((data)=>{        
+        if(data!=null){
+          this.isApplied = true;
+        }
+      });
+    }
+    //
   }
  
 

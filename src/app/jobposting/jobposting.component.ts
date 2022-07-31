@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class JobpostingComponent implements OnInit {
 
   title:String = "Post a New Job";
-   jobItems = new JobPostingModel("","","","","",0,"","","","","");
+   jobItems = new JobPostingModel("","","","","",0,"","","","","","",0);
   constructor(public jobpostingService : JobpostingService,private _auth:AuthService, public router:Router) { }
   jobadded: String='';
   successmsg:String='';
