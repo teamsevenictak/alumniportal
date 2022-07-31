@@ -30,11 +30,14 @@ export class LoginComponent implements OnInit {
           if(LoggedUser.userrole=='user_faculty'){
             this.router.navigate(['/faculty']);
           }
+          else if(LoggedUser.userrole=='user_admin'){
+            this.router.navigate(['/admin']);
+          }
           else if(LoggedUser.userrole=='user_alumni'){
-            this.router.navigate(['/']);
+            this.router.navigate(['/joblisting']);
           }
           else if(LoggedUser.userrole=='user_employer'){
-            this.router.navigate(['/alumni']);
+            this.router.navigate(['/faculty']);
           }
         }      
         

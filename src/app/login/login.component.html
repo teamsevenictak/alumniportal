@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-6">
                 <div class="wow fadeInUp" data-wow-delay="0.5s">
-                    <form (ngSubmit)="loginForm.form.valid && userVerify()" #loginForm="ngForm" class="row g-3 needs-validation">
+                    <form (ngSubmit)="loginForm.form.valid && userVerify()" #loginForm="ngForm" class="row g-3 needs-validation" autocomplete="off">
                         <div class="col-md-8 mx-auto">
                             <label for="username" class="form-label">User name</label>
                             <input type="email" class="form-control" pattern="^[a-z0-9.%+]+@[a-z0-9.-]+\.[a-z]{2,4}"  [(ngModel)]="loginuser.email" name="username" #email="ngModel" [class.is-invalid]="loginForm.submitted && email.invalid" required>

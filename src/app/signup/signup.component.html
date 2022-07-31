@@ -30,10 +30,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="tel" value="" class="form-control" [(ngModel)]="User.phoneno" name="phoneno" #phoneno="ngModel" [class.is-invalid]="signupForm.submitted && phoneno.invalid" required placeholder="Mobile">
+                                <input type="tel" value="" class="form-control" pattern="[6-9][0-9]{9}" [(ngModel)]="User.phoneno" name="phoneno" #phoneno="ngModel" [class.is-invalid]="signupForm.submitted && phoneno.invalid" required placeholder="Mobile">
                                 <label for="mobile">Mobile</label>
                                 <div class="invalid-feedback">
-                                    Phone number required.
+                                   Enter valid Phone number.
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                                 <select name="userrole" [(ngModel)]="User.userrole" #userrole="ngModel"  class="form-control" placeholder="User role" [class.is-invalid]="userrole.invalid && signupForm.submitted" required>
                                     <option value="user_alumni">Alumni</option>
                                     <option value="user_faculty">Faculty</option>
-                                    <option value="user_employer">Employer</option>
+                                    <option value="user_faculty">Employer</option>
                                     </select>
                                   <label for="username">User Role</label>
                               </div>

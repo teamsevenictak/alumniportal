@@ -13,7 +13,7 @@ export class SubmissionComponent implements OnInit {
   constructor(public jobpostingService: JobpostingService,public _auth:AuthService,private router:Router) { }
   application  = 
   { name : '',
-  filelink     : '',
+  filelink : '',
   postID   :'',
   AlumnId  :'',
   Dateofsub:'',

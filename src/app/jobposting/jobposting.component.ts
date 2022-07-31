@@ -39,7 +39,7 @@ export class JobpostingComponent implements OnInit {
       this.success = true;
     });
     
-    this.router.navigate(['/']);
+    this.router.navigate(['/joblisting']);
 
    }
   
