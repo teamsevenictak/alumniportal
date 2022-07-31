@@ -17,7 +17,7 @@ const Postajob = new Schema ({
     jobDescription: String,
     lastDate: String,
     jobType: String,
-    userId:Number
+    userId:String
 })
 
 const Postjob = mongoose.model('postjob', Postajob);

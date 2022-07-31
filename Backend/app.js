@@ -7,6 +7,7 @@ const Applyjob = require("./src/model/Applyjobs.js");
 const cors = require ('cors');
 const bodyParser = require ('body-parser');
 const nodemailer = require("nodemailer");
+let loggedUser ='';
 
 const app = new express();
 
@@ -113,14 +114,13 @@ function verifyToken(req,res,next){
   if(!payload){
     return res.status(401).send('Unauthorized request');
   }
-  req.userId = payload.subject
+  this.loggedUser = payload.subject.id;
   next()
 
 }
 
 function LoggedUserID(req,res){
   let token = req.headers.authorization.split(' ')[1];
-  console.log(token);
   if(token!='null'){
     let payload = jwt.verify(token,'secretKey');
     return req.userId = payload.subject.id;
@@ -161,7 +161,7 @@ app.post('/login', (req, res) => {
       
     }  
 })
-app.get('/getapplicatins',function(req,res){
+app.get('/getapplicatins',verifyToken,function(req,res){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
   Applyjob.find()
@@ -179,12 +179,12 @@ app.get('/postajob',verifyToken,function(req,res){
     })
 })
 app.get('/postsbyuser',verifyToken,function(req,res){
+  id = this.loggedUser;//LoggedUserID();
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
-  //id = LoggedUserID();
+  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");  
+  console.log(this.loggedUser);
   Postjob.findById({"_id":id})
   .then(function(posts){
-    console.log(posts);
       res.send(posts);
   })
 })
@@ -204,6 +204,7 @@ app.post('/addJob',verifyToken, function(req,res){
         jobDescription: req.body.item.jobDescription,
         lastDate: req.body.item.lastDate,
         jobType: req.body.item.jobType,
+        userId :req.body.item.userId
 
     }
 
@@ -239,7 +240,7 @@ app.put('/updateapplicatin',verifyToken, (req, res) => {
 //book.save;  
  // let books = new BooksList(book);
  Applyjob.findByIdAndUpdate({"_id":id},{$set:{
-  "Visibility":0
+  "Visibility":1
 
   }})
       .then(book => {
