@@ -46,7 +46,7 @@ export class JobpostingService {
     formData.append("filelink", application.filelink);
     formData.append("alumniID",  this._auth.getLoggedUserID());
     //var  jobId = localStorage.getItem('jobID');
-    formData.append("jobId", this.selectedId);
+    formData.append("postID", this.selectedId);
     return this.http.post(`${this.server_address}/resume-upload`, formData, {
       reportProgress: true,
       observe: 'events'
