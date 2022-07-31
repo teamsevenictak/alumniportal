@@ -18,7 +18,8 @@ export class ApplynowComponent implements OnInit {
   filelink     : '',
   postID   :'',
   AlumnId  :'',
-  Dateofsub:''
+  Dateofsub:'',
+  emplyId  :''
 
  }
   fileName = '';
@@ -37,28 +38,34 @@ export class ApplynowComponent implements OnInit {
   }
       
 upload(){
+  
+  this.Alumni.postID = this.jobpostingService.selectedId;
+  this.Alumni.emplyId = this.jobpostingService.emplyId;
   if (this.file) {
-    this.loading = !this.loading;
     this.fileName = this.file.name; 
-    this.Alumni.postID = this.jobpostingService.selectedId;
+    this.loading = !this.loading;   
     this.uploadSub = this.jobpostingService.upload(this.file,this.Alumni).subscribe({
       next: (data:any) =>  {   
         var filelink = JSON.parse(JSON.stringify(data));
         this.shortLink = filelink.message;
-        console.log( this.shortLink);
         this.loading = false;
         this.isSuccessful=true;
         this.isUploaderr =false;
       } ,  
-      error: (err) => { 
-       if(err.error.message!=''){
-       this.isUploaderr = true;
-     }  
-   }
+          error: (err) => { 
+          if(err.error.message!=''){
+          this.isUploaderr = true;
+        }  
+      }
+    }     
+  )
+}
+else{  
+  this.jobpostingService.submitapplication(this.Alumni).subscribe((data)=>{        
+    if(data!=null){
+      this.isSuccessful=true;
     }
-
-      
-    )
+  });
 }
 }
 cancelUpload() {

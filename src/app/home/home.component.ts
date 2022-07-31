@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(public jobpostingService: JobpostingService, public router:Router) { }
 
   ngOnInit(): void {
-    this.jobpostingService.getJobs().subscribe((data)=>{
+    this.jobpostingService.getlatestJobs().subscribe((data)=>{
       this.postajob=JSON.parse(JSON.stringify(data));
     })
   }

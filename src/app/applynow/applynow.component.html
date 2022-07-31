@@ -11,7 +11,7 @@
             *ngIf="uploadProgress">delete_forever</mat-icon>
 
 </div>
-<form style="padding-left:250px;" (ngSubmit)="applynowForm.form.valid && upload()" #applynowForm="ngForm">
+<form style="padding-left:250px;" (ngSubmit)="applynowForm.form.valid && upload()" #applynowForm="ngForm" *ngIf="!isSuccessful">
   <div class="row col-sm-12 g-10">
       <div class="col-8 ">
           <label for="name" style="padding-bottom:5px ;">Your Name</label>

@@ -11,5 +11,7 @@ export class JobPostingModel{
     public jobDescription: String,
     public lastDate: String,
     public jobType: String,
+    public userId: String,
+    public verified: Number
     ) {}
 }
