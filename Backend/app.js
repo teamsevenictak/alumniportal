@@ -11,6 +11,9 @@ let loggedUser ='';
 
 const app = new express();
 
+//const path = require('path');
+//app.use(express.static(`./dist/frontend`));
+
 app.use(cors());
 const jwt = require('jsonwebtoken');
 app.use(resumeupload());
@@ -33,31 +36,53 @@ app.post('/register', (req, res) => {
     password  : req.body.user.password,
     userrole  : req.body.user.userrole,
     terms     : req.body.user.terms
-
   }
   let users = new UserDetail(newuser);
   userExists = 0;
   UserDetail.findOne ({"email":users.email})
-  .then(function (userExists) {     
-
+  .then(function (userExists) {   
     if(userExists){  
      return res.status(400).send({message:'Email Already exists in our system'});
-     res.end();
     }
   });
   if(!userExists){
     users.save()
     .then(newuser => {
-       res.status(200).json({'user': 'user registration completed successfully'});
+      return res.status(200).json({'user': 'user registration completed successfully'});
     })
     .catch(err => {
-        res.status(400).send({message:'user registration failed'});
+        return res.status(400).send({message:'user registration failed'});
     });
-  }
-  
-    
+  }    
  
 })
+
+app.post("/resume-submit", (req, res) => {
+  timestamp = new Date().getTime().toString();
+  link_posted = req.body.filelink;
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+      dateofsub = new Date();
+      var applyjobs = {
+          name: req.body.name,
+          link: link_posted,
+          postID: req.body.postID,
+          AlumnId: req.body.alumniID,
+          Dateofsub:dateofsub,
+          Visibility:0,
+          EmplyID:req.body.emplyId
+      }
+  console.log(applyjobs);
+      var job = new Applyjob(applyjobs)
+      job.save()
+      .then(job => {
+          
+          return res.status(200).json({'job': 'New Application submitted successfully'});
+      })
+      .catch(err => {
+          return res.status(400).send('Apllication submission failed');
+      });
+});
 app.post("/resume-upload", (req, res) => {
   const newpath = __dirname + "/files/";
   const file = req.files.resume;  
@@ -65,11 +90,11 @@ app.post("/resume-upload", (req, res) => {
   const filename = timestamp+file.name;
   link_posted = req.body.filelink;
   if(link_posted==''){
-    link_posted = `${newpath}${filename}`;
+    link_posted = `${filename}`;
   }
   file.mv(`${newpath}${filename}`, (err) => {
     if (err) {
-      res.status(500).send({ message: "File upload failed", code: 200 });
+      return res.status(500).send({ message: "File upload failed" });
     }
     else{
       res.header("Access-Control-Allow-Origin", "*");
@@ -81,20 +106,21 @@ app.post("/resume-upload", (req, res) => {
           postID: req.body.postID,
           AlumnId: req.body.alumniID,
           Dateofsub:dateofsub,
-          Visibility:0
+          Visibility:0,
+          EmplyID:req.body.emplyId
       }
-  
+  console.log(applyjobs);
       var job = new Applyjob(applyjobs)
       job.save()
       .then(job => {
           
-          res.status(200).json({'job': 'New Application submitted successfully'});
+          return res.status(200).json({'job': 'New Application submitted successfully'});
       })
       .catch(err => {
-          res.status(400).send('Apllication submission failed');
+          return res.status(400).send('Apllication submission failed');
       });
     }
-    res.status(200).send({ message: `${newpath}${filename}`, code: 200 });
+   // res.status(200).send({ message: `${newpath}${filename}`, code: 200 });
   });
 });
 //username= "admin";
@@ -114,7 +140,16 @@ function verifyToken(req,res,next){
   if(!payload){
     return res.status(401).send('Unauthorized request');
   }
-  this.loggedUser = payload.subject.id;
+  this.loggedUser = payload.id;
+  this.loggedRole =payload.user_role;
+  if(this.loggedRole == "user_faculty"){
+    this.loggedUser = payload.id;
+  }
+  else if(this.loggedRole == "user_admin"){
+    this.loggedUser = 'fetchall';
+  }
+  else { this.loggedUser =0; }
+  
   next()
 
 }
@@ -123,7 +158,7 @@ function LoggedUserID(req,res){
   let token = req.headers.authorization.split(' ')[1];
   if(token!='null'){
     let payload = jwt.verify(token,'secretKey');
-    return req.userId = payload.subject.id;
+    return req.userId = payload.id;
   }
 }
 app.post('/login', (req, res) => {
@@ -132,10 +167,10 @@ app.post('/login', (req, res) => {
     res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
    
     if(!userData.email){
-        res.status(401).send("invalid username");
+       return res.status(401).send("invalid username");
     }
     else if(!userData.password){
-      res.status(401).send("invalid password");
+      return res.status(401).send("invalid password");
     }
     else {        
       UserDetail.findOne ({"email":userData.email,"password":userData.password})
@@ -147,8 +182,7 @@ app.post('/login', (req, res) => {
               'token':token,
               'userrole':user.userrole
             } */
-            res.status(200).send({'token':token,
-            'userrole':user.userrole});
+            return res.status(200).send({'token':token,'userrole':user.userrole});
           }
           else{
             return res.status(400).send({msg:`Invalid Login credentials`});
@@ -164,29 +198,59 @@ app.post('/login', (req, res) => {
 app.get('/getapplicatins',verifyToken,function(req,res){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
-  Applyjob.find()
+  id = this.loggedUser;
+    if(id=='fetchall'){
+      Applyjob.find()
+      .then(function(applyjob){
+          return res.send(applyjob);
+      })
+  }
+  else if(id!=0 && id!=undefined){
+    Applyjob.find({"EmplyID":id,"Visibility":1})
   .then(function(applyjob){
-      res.send(applyjob);
+      return res.send(applyjob);
   })
+   
+  }
+  
+ 
+ 
 })
-app.get('/postajob',verifyToken,function(req,res){
+app.get('/latestjobs',function(req,res){  
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+    Postjob.find({"verified":1})
+    .limit(5)
+    .then(function(postajob){
+        return res.send(postajob);
+    })
+  
+})
+app.get('/postajob',function(req,res){  
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+    id=0;
+    id = this.loggedUser;
+   
+    if(id=='fetchall'){
+        Postjob.find()
+      .then(function(postajob){
+          return res.send(postajob);
+      })
+    }
+    else if(id!=0 && id!=undefined){
+      Postjob.find({"userId":id})
+      .then(function(posts){
+          return res.send(posts);
+      })
+    }else {
+      Postjob.find({"verified":1})
+      .then(function(postajob){
+        console.log(postajob);
+          return res.send(postajob);
+      })
+    }
     
-    Postjob.find()
-    .then(function(postajob){
-        res.send(postajob);
-    })
-})
-app.get('/postsbyuser',verifyToken,function(req,res){
-  id = this.loggedUser;//LoggedUserID();
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");  
-  console.log(this.loggedUser);
-  Postjob.findById({"_id":id})
-  .then(function(posts){
-      res.send(posts);
-  })
 })
 app.post('/addJob',verifyToken, function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
@@ -204,7 +268,8 @@ app.post('/addJob',verifyToken, function(req,res){
         jobDescription: req.body.item.jobDescription,
         lastDate: req.body.item.lastDate,
         jobType: req.body.item.jobType,
-        userId :req.body.item.userId
+        userId :req.body.item.userId,
+        verified:0
 
     }
 
@@ -219,7 +284,7 @@ app.post('/addJob',verifyToken, function(req,res){
     });
 })
 app.get('/jobdetail/:id',(req, res) => {
-    id  = req.params.id;
+  id  = req.params.id;
     Postjob.findById({"_id":id})
     .then(function (jobdetail) {
       res.send(jobdetail);
@@ -229,27 +294,51 @@ app.get('/jobdetail/:id',(req, res) => {
   });
 
 })
+app.get('/getAppById/',(req, res) => {
+
+  id  = req.query.postID;
+  userId  = req.query.AlumnId;
+  
+  Applyjob.findOne({"postID":id,"AlumnId":userId},{"Visibility":1})
+  .then(function (applied) {
+    res.send(applied);
+})
+.catch(err => {
+    res.status(400).send('fetching job detail failed');
+});
+
+})
+
 
 app.put('/updateapplicatin',verifyToken, (req, res) => {
   id  = req.body.Appid;
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-    
- 
-//var book = new BooksList(book);
-//book.save;  
- // let books = new BooksList(book);
- Applyjob.findByIdAndUpdate({"_id":id},{$set:{
-  "Visibility":1
-
-  }})
-      .then(book => {
-          res.status(200).json({'book': 'book details updated successfully'});
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+  Applyjob.findByIdAndUpdate({"_id":id},{$set:{
+    "Visibility":1
+    }})
+      .then(applctn => {
+          res.status(200).json({'verify': 'Application sent successfully'});
       })
       .catch(err => {
-          res.status(400).send('book updation failed');
+          res.status(400).send('Application senting failed');
       });
 })
+app.put('/verifypost',verifyToken, (req, res) => {
+  id  = req.body.PostId;
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+  Postjob.findByIdAndUpdate({"_id":id},{$set:{
+    "verified":1
+    }})
+      .then(post => {
+          res.status(200).json({'verify': 'Post sent successfully'});
+      })
+      .catch(err => {
+          res.status(400).send({'verify': 'Post verification failed'});
+      });
+})
+
 app.post('/sendEmail', function (req, res) {
     // async..await is not allowed in global scope, must use a wrapper
 async function main() {
@@ -261,28 +350,31 @@ async function main() {
     message    : req.body.visitor.message
     }
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service: "gmail",   
-    auth: {
-      user: 'teamsevenictak@gmail.com',
-      pass: 'mckfxowcmhxcjpcd'
-    },
-  });
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: 'teamsevenictak@gmail.com', // sender address
-    to: visitor.name+visitor.email, // list of receivers
-    subject: visitor.subject, // Subject line
-    text: visitor.message
-  });
-  console.log("Message sent: %s", info.messageId);
-  res.status(200).json({'message': 'Mail sent successfully'});
-}
-
-main().catch(console.error);
-    
+    let transporter = nodemailer.createTransport({
+      service: "gmail",   
+      auth: {
+        user: 'teamsevenictak@gmail.com',
+        pass: 'mckfxowcmhxcjpcd'
+      },
     });
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: 'teamsevenictak@gmail.com', // sender address
+      to: visitor.name+visitor.email, // list of receivers
+      subject: visitor.subject, // Subject line
+      text: visitor.message
+    });
+    console.log("Message sent: %s", info.messageId);
+    res.status(200).json({'message': 'Mail sent successfully'});
+  }
 
+  main().catch(console.error);
+    
+});
+/* app.get('/*', function(req, res) {
+
+  res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
+});  */
 const PORT = process.env.PORT || 5000
 
 app.listen(PORT, () => {
