@@ -21,8 +21,7 @@ export class JobdetailComponent implements OnInit {
   isCutoffOver :Boolean=false;
   isApplied:Boolean=false;
   ngOnInit(): void {
-    this.jobItems = this.jobpostingService.jobDetails;
-    if(this.jobItems==undefined){
+   // this.jobItems = this.jobpostingService.jobDetails;
       const  jobsID = localStorage.getItem('jobID');
       //this.jobpostingService.selectedId = jobsID;    
       this.jobpostingService.getJobById(jobsID).subscribe((data)=>{        
@@ -38,18 +37,7 @@ export class JobdetailComponent implements OnInit {
           this.isCutoffOver = true;
         }
       });
-      
-    }
-    else {
-      //const lastDate = new Date(this.jobItems.lastDate);
-     
-     // console.log(lastDate.getTime());
-     // console.log(this.today.getTime());
-      //if(lastDate < this.today)
-      {
 
-      }
-    }
     //check if already applied
     if(this._auth.isalumni()){
       const userId = this._auth.getLoggedUserID();

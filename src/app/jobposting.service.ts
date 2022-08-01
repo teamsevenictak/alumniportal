@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 export class JobpostingService {
   jobDetails:any;
   server_address : String = `http://localhost:5000`;// `api`;
+  //server_address : String = `api`;
   userId : String='';
   uploadProgress :Number=0;
   uploadSub!: Subscription;
@@ -77,6 +78,7 @@ export class JobpostingService {
     formData.append("alumniID",  this._auth.getLoggedUserID());
     var  jobId = localStorage.getItem('jobID');
     formData.append("postID", this.selectedId);
+    formData.append("emplyId", this.emplyId);
     return this.http.post(`${this.server_address}/resume-submit`, formData)
   }
   cancelUpload() {

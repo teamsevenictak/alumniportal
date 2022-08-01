@@ -10,14 +10,14 @@
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <i><b>{{i.name}}</b></i>
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3"><a target="_blank" href="{{i.link}}">{{i.link}}</a></h5>
+                                    <h5 class="mb-3"><a target="_blank" href="localhost:4200/Backend/{{i.link}}">{{i.link}}</a></h5>
                                     <span class="text-truncate me-3"><i class="far fa-calendar-alt text-primary me-2"></i>{{i.Dateofsub}}</span>                                    
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                               <span style='font-size:22px;'  *ngIf="i.Visibility==1 || isverified">&#10003; Sent to Employer</span>
+                               <span style='font-size:22px;'  *ngIf="((i).Visibility==1 || isverified) && _auth.HaveAdminAccess()">&#10003; Sent to Employer</span>
                                 <div class="d-flex mb-3" *ngIf="i.Visibility==0">
-                                    <a class="btn btn-primary" *ngIf="_auth.HaveAdminAccess() && isverified" (click)="sendToEmployer(i)">Send To Employer</a>
+                                    <a class="btn btn-primary" *ngIf="_auth.HaveAdminAccess() && !isverified" (click)="sendToEmployer(i)">Send To Employer</a>
                                 </div>
                                 <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date of submission:{{i.Dateofsub}}</span>
                             </div>
