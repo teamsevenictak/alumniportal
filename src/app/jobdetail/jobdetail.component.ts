@@ -14,7 +14,6 @@ export class JobdetailComponent implements OnInit {
   jobItems = new JobPostingModel("","","","","",0,"","","","","","",1);
   selectedId  :string='';
   jobId       :string='';
-  emplyId     :string='';  
   constructor(public jobpostingService: JobpostingService,public _auth:AuthService) { }
   today :Date= new Date();
   lastDate:Date= new Date();
@@ -27,7 +26,6 @@ export class JobdetailComponent implements OnInit {
       this.jobpostingService.getJobById(jobsID).subscribe((data)=>{        
         var jobDetail = JSON.parse(JSON.stringify(data));
         this.lastDate = jobDetail.lastDate;
-        this.jobpostingService.emplyId    =  jobDetail.emplyId;
         this.jobItems = jobDetail; 
        
         const lastDate = new Date(this.lastDate);

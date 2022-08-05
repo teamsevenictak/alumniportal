@@ -9,22 +9,19 @@ import { JobpostingService } from '../jobposting.service';
   styleUrls: ['./faculty.component.css']
 })
 export class FacultyComponent implements OnInit {
-  postajob : JobPostingModel [] |any;
+  User  = 
+  { firstname : '',
+    email     : '',
+    phoneno   : '',
+    password  : '', 
+    userrole  : '',   
+    terms:0}
   constructor(public jobpostingService: JobpostingService, public router:Router) { }
 
   ngOnInit(): void {
-    this.jobpostingService.getJobsByUser().subscribe((data)=>{
-      this.postajob=JSON.parse(JSON.stringify(data));
+    this.jobpostingService.getUser().subscribe((data)=>{
+      this.User=JSON.parse(JSON.stringify(data));
     })
   }
-  viewDetail(jobposting:any){
-    var  jobId = jobposting._id;
-    this.jobpostingService.getJobById(jobId).subscribe((data)=>{
-      var jobDetail = JSON.parse(JSON.stringify(data));
-      this.jobpostingService.jobDetails = jobDetail; 
-      
-      localStorage.setItem('jobID',jobId);
-      this.router.navigate(['/jobdetail']); 
-    })
-   }
+
 }
