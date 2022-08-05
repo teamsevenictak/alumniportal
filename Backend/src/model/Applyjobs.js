@@ -2,7 +2,7 @@ const { default: mongoose } = require('mongoose');
 const Mongoose = require('mongoose');
 
 //mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-mongoose.connect('mongodb+srv://alumniportal:PfR1cnUoGzrhQBhr@alumni.dmlb0.mongodb.net/jobportal?retryWrites=true&w=majority');
+db = mongoose.connect('mongodb+srv://alumniportal:PfR1cnUoGzrhQBhr@alumni.dmlb0.mongodb.net/jobportal?retryWrites=true&w=majority');
 
 const Schema = mongoose.Schema;
 const Applyjob = new Schema({
@@ -12,7 +12,6 @@ const Applyjob = new Schema({
     AlumnId     :  String,
     Dateofsub   :  Date,
     Visibility  : Number,
-    EmplyID     :String
 })
 const applyjob = mongoose.model('applied',Applyjob);
 module.exports = applyjob;

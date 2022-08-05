@@ -17,7 +17,7 @@ const app = new express();
 app.use(cors());
 const jwt = require('jsonwebtoken');
 app.use(resumeupload());
-//app.use(express.static("files"));
+app.use(express.static("files"));
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -70,7 +70,6 @@ app.post("/resume-submit", (req, res) => {
           AlumnId: req.body.alumniID,
           Dateofsub:dateofsub,
           Visibility:0,
-          EmplyID:req.body.emplyId
       }
   console.log(applyjobs);
       var job = new Applyjob(applyjobs)
@@ -107,7 +106,6 @@ app.post("/resume-upload", (req, res) => {
           AlumnId: req.body.alumniID,
           Dateofsub:dateofsub,
           Visibility:0,
-          EmplyID:req.body.emplyId
       }
   console.log(applyjobs);
       var job = new Applyjob(applyjobs)
@@ -161,6 +159,16 @@ function LoggedUserID(req,res){
     return req.userId = payload.id;
   }
 }
+
+app.get('/getuser',verifyToken,function(req,res){  
+  id = this.loggedUser;
+  console.log(id);
+  UserDetail.findOne ({"_id":id})
+    .then(function(userDetail){
+        return res.send(userDetail);
+    })
+  
+})
 app.post('/login', (req, res) => {
     let userData = req.body;
     res.header("Access-Control-Allow-Origin", "*");
@@ -200,16 +208,64 @@ app.get('/getapplicatins',verifyToken,function(req,res){
   res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
   id = this.loggedUser;
     if(id=='fetchall'){
-      Applyjob.find()
-      .then(function(applyjob){
+      Applyjob.aggregate([
+        {
+          $lookup: {
+            "let": { "postObjID": { "$toObjectId": "$postID" } },
+            from: "postjobs",
+            "pipeline": [
+              { "$match": { "$expr": { "$eq": [ "$_id", "$$postObjID" ] } } }
+            ],
+            as: "applctndetails"
+          }
+        },
+        {
+          $unwind: "$applctndetails"
+       },
+       
+      ])
+        .then(function(applyjob){
           return res.send(applyjob);
-      })
-  }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+   }
   else if(id!=0 && id!=undefined){
-    Applyjob.find({"EmplyID":id,"Visibility":1})
-  .then(function(applyjob){
-      return res.send(applyjob);
-  })
+    console.log(id);
+    Applyjob.aggregate([
+      {
+        $lookup: {
+          "let": { "postObjID": { "$toObjectId": "$postID"},visibility: "$Visibility"},
+          from: "postjobs",
+          "pipeline": [
+            { "$match":
+            { $expr:
+              { $and:
+                 [
+                   { $eq: [ "$_id",  "$$postObjID" ] },
+                   { $eq: [ 1, "$$visibility" ] },
+                   { $eq: [id, "$userId" ] }
+                 ]
+              }
+           }
+            }
+          ],
+          as: "applctndetails"
+        }
+      },
+      {
+        $unwind: "$applctndetails"
+     },
+     
+    ])
+      .then(function(applyjob){
+        console.log(applyjob);
+        return res.send(applyjob);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
    
   }
   
@@ -226,6 +282,14 @@ app.get('/latestjobs',function(req,res){
     })
   
 })
+app.get('/postbycategory/:id',(req, res) => {
+    id  = req.params.id;
+    Postjob.find({"jobcategory":id,"verified":1})
+      .then(function (jobcategory) {
+        res.send(jobcategory);
+    })  
+})
+
 app.get('/postajob',function(req,res){  
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
@@ -246,7 +310,6 @@ app.get('/postajob',function(req,res){
     }else {
       Postjob.find({"verified":1})
       .then(function(postajob){
-        console.log(postajob);
           return res.send(postajob);
       })
     }
@@ -309,7 +372,17 @@ app.get('/getAppById/',(req, res) => {
 
 })
 
+app.delete('/remove/:id',verifyToken,(req, res) => {
+  id  = req.params.id;
+  Postjob.findByIdAndDelete({"_id":id})
+  .then(() => {
+    res.status(200).json({'post': 'post deleted successfully'});
+})
+.catch(err => {
+    res.status(400).send('deleting post failed');
+});
 
+})
 app.put('/updateapplicatin',verifyToken, (req, res) => {
   id  = req.body.Appid;
   res.header("Access-Control-Allow-Origin", "*");
