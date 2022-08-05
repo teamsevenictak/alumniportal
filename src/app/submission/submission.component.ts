@@ -21,11 +21,15 @@ export class SubmissionComponent implements OnInit {
       console.log(this.application);
     })
   }
-  sendToEmployer(application:any){
+  sendToEmployer(application:any,event: any){
+    console.log(event.target);
     var  AppId = application._id;
     this.jobpostingService.updateById(AppId).subscribe((data)=>{
       if(data!=null){
-        this.isverified=true;
+        //this.isverified=true;
+        event.target.innerHTML = "Forwarded to employer";
+        event.target.disabled = true;
+
       }
          // this.router.navigate(['/jobdetail']); 
     })

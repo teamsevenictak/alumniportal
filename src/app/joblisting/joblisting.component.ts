@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JobPostingModel } from '../home/jobposting.model';
 import { JobpostingService } from '../jobposting.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 
@@ -13,13 +13,26 @@ import { AuthService } from '../auth.service';
 export class JoblistingComponent implements OnInit {
   postajob : JobPostingModel [] |any;
   verifiedpost:Boolean =false;
-  constructor(public jobpostingService: JobpostingService, public router:Router,public _auth:AuthService) { }
+  route: any;
+  id!: string | null;
+  
+  constructor(public jobpostingService: JobpostingService, public router:Router,public _auth:AuthService,private _Activatedroute:ActivatedRoute) { }
 
 
-  ngOnInit(): void {
-    this.jobpostingService.getJobs().subscribe((data)=>{
-      this.postajob=JSON.parse(JSON.stringify(data));
-    })
+  ngOnInit(): void {     
+    this._Activatedroute.paramMap.subscribe(params => { 
+      this.id = params.get('id'); 
+    });
+    if(this.id==null){
+      this.jobpostingService.getJobs().subscribe((data)=>{
+        this.postajob=JSON.parse(JSON.stringify(data));
+      })
+    }
+    else {
+      this.jobpostingService.getJobsByCategory(this.id).subscribe((data)=>{
+        this.postajob=JSON.parse(JSON.stringify(data));
+      })
+    }
   }
   viewDetail(jobposting:any){
     var  jobId = jobposting._id;
@@ -41,5 +54,14 @@ export class JoblistingComponent implements OnInit {
         this.verifiedpost = true;
       }
     })
+   }
+   deletePost(post:any){
+    var cnfrm =confirm('Are you sure you want to delete this post?');
+    if(cnfrm){
+      this.jobpostingService.deletePost(post._id)
+      .subscribe((data)=>{ 
+        window.location.reload()
+        });
+    }      
    }
 }

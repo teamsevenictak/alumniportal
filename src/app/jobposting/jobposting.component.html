@@ -38,14 +38,14 @@
                 <div class="col-12 col-sm-6"> 
                     <select name="jobcategory" [(ngModel)]="jobItems.jobcategory" #jobcategory="ngModel"  class="form-control" placeholder="Job Category" [class.is-invalid]="jobcategory.invalid && joppostForm.submitted" required>
                         <option value="" selected>Job category</option>
-                        <option value="Data Science">Data Science</option>
-                        <option value="Cyber Security">Cyber Security</option>
-                        <option value="Human Resource">Human Resource</option>
-                        <option value="Project Management">Project Management</option>
-                        <option value="Full stack Development">Full stack Development</option>
-                        <option value="Software Testing">Software Testing</option>
-                        <option value="Robotics Process Automation">Robotics Process Automation</option>
-                        <option value="Design & Creative">Design & Creative</option>
+                        <option value="DataScience">Data Science</option>
+                        <option value="CyberSecurity">Cyber Security</option>
+                        <option value="HumanResource">Human Resource</option>
+                        <option value="ProjectManagement">Project Management</option>
+                        <option value="Fullstack">Full stack Development</option>
+                        <option value="SoftwareTesting">Software Testing</option>
+                        <option value="RoboticsProcess">Robotics Process Automation</option>
+                        <option value="DesignCreative">Design & Creative</option>
                     </select>         
                     <div class="invalid-feedback">
                         Job category required
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">           
-                    <input type="date" name="lastdate" class="lastdate"  [(ngModel)]="jobItems.lastDate" #lastdate="ngModel" class="form-control" placeholder="Last Date" [class.is-invalid]="lastdate.invalid && joppostForm.submitted" [min]="2022-07-30" required>
+                    <input type="date" name="lastdate" class="lastdate"  [(ngModel)]="jobItems.lastDate" #lastdate="ngModel" class="form-control" placeholder="Last Date" [class.is-invalid]="lastdate.invalid && joppostForm.submitted" [min]="2022-08-01" required>
                     <div class="invalid-feedback">
                         Last date for application submission required
                     </div>

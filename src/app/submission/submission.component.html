@@ -1,28 +1,34 @@
 <!-- Jobs Start -->
 <div class="container-xxl py-5">
     <div class="container">
-        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Applications submitted</h1>
+        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Applications Received</h1>
         <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">          
             <div class="">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="job-item p-4 mb-4" *ngFor="let i of application">
                         <div class="row g-4">
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                <i><b>{{i.name}}</b></i>
-                                <div class="text-start ps-4">
-                                    <h5 class="mb-3"><a target="_blank" href="localhost:4200/Backend/{{i.link}}">{{i.link}}</a></h5>
-                                    <span class="text-truncate me-3"><i class="far fa-calendar-alt text-primary me-2"></i>{{i.Dateofsub}}</span>                                    
+                                <div class="row">
+                                    <div class="col-sm-12"><i class="blue"><b>{{i.applctndetails.jobRole}}</b></i><br><br></div>
+                                    <div class="col-sm-12"><small>{{i.applctndetails.companyName}}</small></div>
+                                </div>
+                                <div class="text-start ps-4"> <h5 class="mb-3">Submitted By:</h5> <i><b>{{i.name}}</b></i>
+                                    <h5 class="mb-3"><a target="_blank"  href="http://localhost/files/{{i.link}}">{{i.link}}</a></h5>
+                                    <span class="text-truncate me-3"><i class="far fa-calendar-alt text-primary me-2"></i>{{i.Dateofsub|date:'dd-mm-YYYY  h:mm a'}}</span>                                    
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                               <span style='font-size:22px;'  *ngIf="((i).Visibility==1 || isverified) && _auth.HaveAdminAccess()">&#10003; Sent to Employer</span>
+                               <span style='font-size:20px;color:green'  *ngIf="((i).Visibility==1 || isverified) && _auth.HaveAdminAccess()">&#10003; Forwarded to Employer</span>
                                 <div class="d-flex mb-3" *ngIf="i.Visibility==0">
-                                    <a class="btn btn-primary" *ngIf="_auth.HaveAdminAccess() && !isverified" (click)="sendToEmployer(i)">Send To Employer</a>
+                                    <button class="btn btn-primary app_send" *ngIf="_auth.HaveAdminAccess() && !isverified" (click)="sendToEmployer(i,$event)">Send To Employer</button>
                                 </div>
-                                <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date of submission:{{i.Dateofsub}}</span>
+                                <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date of submission:{{i.Dateofsub|date:'dd-mm-YYYY  h:mm a'}}</span>
                             </div>
                         </div>
-                    </div>                    
+                    </div>  
+                    <div *ngIf="!application?.length">
+                        <h4 class="red">No submissions to display</h4>
+                     </div>                  
                 </div>
             </div>
         </div>

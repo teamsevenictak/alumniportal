@@ -7,17 +7,20 @@
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="job-item p-4 mb-4" *ngFor="let i of postajob">
                         <div class="row g-4">
+                            <div class="col-lg-2 offset-lg-10">
+                                <button type="button" class="btn-close float-end" aria-label="Close" *ngIf="_auth.HaveAdminAccess()"  (click)="deletePost(i);"></button>
+                            </div>
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <i><b>{{i.companyName}}</b></i><!-- <img class="flex-shrink-0 img-fluid border rounded" src="../../assets/img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;"> -->
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3">{{i.jobRole}}</h5>
+                                    <h3 class="mb-3 blue">{{i.jobRole}}</h3>
                                     <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{i.location}}</span>
                                     <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{i.jobType}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-briefcase text-primary me-2"></i>{{i.experience}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-trophy text-primary me-2"></i>{{i.qualification}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-lightbulb text-primary me-2"></i>{{i.skills}}</span>
-                                    <span class="text-truncate me-0" *ngIf="i.verified==1 && _auth.HaveEmployeeAcess()"><br>&#10003; Verified</span>
-                                    <br><br><span style="color:red;" *ngIf="i.verified==0 && _auth.HaveEmployeeAcess()">Will be posted once approved by admin</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-briefcase text-primary me-2"></i>{{i.experience}} Years</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-trophy text-primary me-2"></i>{{i.qualification}}</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-lightbulb text-primary me-2"></i>{{i.skills}}</span>
+                                    <span class="me-3 mt-1 green" *ngIf="i.verified==1 && _auth.HaveEmployeeAcess()"><br>&#10003; Verified</span>
+                                    <br><br><span class="red" *ngIf="i.verified==0 && _auth.HaveEmployeeAcess()">Will be posted once approved by admin</span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
@@ -32,7 +35,10 @@
                             </div>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5" routerLink="/joblisting">Browse More Jobs</a>
+                    <div *ngIf="!postajob?.length">
+                        <h2 class="red">No jobs to display</h2>
+                     </div>     
+                    <a class="btn btn-primary py-3 px-5" routerLink="/joblisting" *ngIf="postajob?.length">Browse More Jobs</a>
                 </div>
             </div>
         </div>

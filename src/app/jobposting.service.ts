@@ -18,9 +18,14 @@ export class JobpostingService {
   emplyId   : string ='';
 
   constructor(public http: HttpClient,private _auth:AuthService) { }
-
+  getUser(){
+    return this.http.get(`${this.server_address}/getuser`)
+  }
   getJobs(){
     return this.http.get(`${this.server_address}/postajob`)
+  }
+  getJobsByCategory(id:any){
+    return this.http.get(`${this.server_address}/postbycategory/`+id);
   }
   getlatestJobs(){
     return this.http.get(`${this.server_address}/latestjobs`)
@@ -61,7 +66,6 @@ export class JobpostingService {
     formData.append("alumniID",  this._auth.getLoggedUserID());
     var  jobId = localStorage.getItem('jobID');    
     formData.append("postID", this.selectedId);
-    formData.append("emplyId", this.emplyId);
     return this.http.post(`${this.server_address}/resume-upload`, formData, {
       reportProgress: true,
       observe: 'events'
@@ -89,5 +93,8 @@ export class JobpostingService {
   reset() {
     this.uploadProgress = 0;
     this.uploadSub.unsubscribe();
+  }
+  deletePost(id:any){
+    return this.http.delete(`${this.server_address}/remove/`+id);
   }
 }
