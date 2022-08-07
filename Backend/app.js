@@ -162,7 +162,6 @@ function LoggedUserID(req,res){
 
 app.get('/getuser',verifyToken,function(req,res){  
   id = this.loggedUser;
-  console.log(id);
   UserDetail.findOne ({"_id":id})
     .then(function(userDetail){
         return res.send(userDetail);
@@ -236,7 +235,7 @@ app.get('/getapplicatins',verifyToken,function(req,res){
     Applyjob.aggregate([
       {
         $lookup: {
-          "let": { "postObjID": { "$toObjectId": "$postID"},visibility: "$Visibility"},
+          "let": { "postObjID": { "$toObjectId": "$postID"},visibility: "$Visibility",userId:"$userId"},
           from: "postjobs",
           "pipeline": [
             { "$match":
@@ -245,7 +244,6 @@ app.get('/getapplicatins',verifyToken,function(req,res){
                  [
                    { $eq: [ "$_id",  "$$postObjID" ] },
                    { $eq: [ 1, "$$visibility" ] },
-                   { $eq: [id, "$userId" ] }
                  ]
               }
            }
@@ -295,7 +293,7 @@ app.get('/postajob',function(req,res){
     res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
     id=0;
     id = this.loggedUser;
-   
+   console.log(id);
     if(id=='fetchall'){
         Postjob.find()
       .then(function(postajob){
