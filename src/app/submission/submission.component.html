@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="text-start ps-4"> <h5 class="mb-3">Submitted By:</h5> <i><b>{{i.name}}</b></i>
                                     <h5 class="mb-3"><a target="_blank"  href="http://localhost/files/{{i.link}}">{{i.link}}</a></h5>
-                                    <span class="text-truncate me-3"><i class="far fa-calendar-alt text-primary me-2"></i>{{i.Dateofsub|date:'dd-mm-YYYY  h:mm a'}}</span>                                    
+                                    <span class="text-truncate me-3"><i class="far fa-calendar-alt text-primary me-2"></i>{{i.Dateofsub|date:'dd-MM-YYYY'}}</span>                                    
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
@@ -22,7 +22,7 @@
                                 <div class="d-flex mb-3" *ngIf="i.Visibility==0">
                                     <button class="btn btn-primary app_send" *ngIf="_auth.HaveAdminAccess() && !isverified" (click)="sendToEmployer(i,$event)">Send To Employer</button>
                                 </div>
-                                <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date of submission:{{i.Dateofsub|date:'dd-mm-YYYY  h:mm a'}}</span>
+                                <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date of submission:{{i.Dateofsub|date:'dd-MM-YYYY'}}</span>
                             </div>
                         </div>
                     </div>  

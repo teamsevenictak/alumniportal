@@ -8,7 +8,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="/" class="nav-item nav-link active">Home</a>
+            <a href="/" class="nav-item nav-link active" *ngIf="!_auth.HaveAdminAccess() && ! _auth.HaveEmployeeAcess()">Home</a>
+            <a href="/admin" class="nav-item nav-link active" *ngIf="_auth.HaveAdminAccess() && ! _auth.HaveEmployeeAcess()">Home</a>
+            <a href="/faculty" class="nav-item nav-link active" *ngIf="!_auth.HaveAdminAccess() &&  _auth.HaveEmployeeAcess()">Home</a>
             <a routerLink="postajob" class="nav-item nav-link">Post a Job</a>
             <a routerLink="myjobs" class="nav-item nav-link">Jobs Posted</a>
             <a routerLink="submission" class="nav-item nav-link" *ngIf="_auth.HaveAdminAccess() || _auth.HaveEmployeeAcess()">View Applications</a>
