@@ -97,4 +97,9 @@ export class JobpostingService {
   deletePost(id:any){
     return this.http.delete(`${this.server_address}/remove/`+id);
   }
+  editPost(post:any){
+    return this.http.put(`${this.server_address}/editPost`,{item:post})
+    .subscribe((data)=>{ //console.log(data);
+       console.log('Edited successfully');  });
+  }
 }

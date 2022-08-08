@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,7 @@ import { SubmissionComponent } from './submission/submission.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApplynowComponent } from './applynow/applynow.component';
 import { AdminComponent } from './admin/admin.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -46,13 +47,15 @@ import { AdminComponent } from './admin/admin.component';
     SubmissionComponent,
     ApplynowComponent,
     AdminComponent,
+    EditPostComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CKEditorModule 
 
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

@@ -7,6 +7,7 @@ import { AdminComponent } from './admin/admin.component';
 import { ApplynowComponent } from './applynow/applynow.component';
 import { AuthGuard } from './auth.guard';
 import { ContactComponent } from './contact/contact.component';
+import { EditPostComponent } from './edit-post/edit-post.component';
 import { FacultyComponent } from './faculty/faculty.component';
 import { HomeComponent } from './home/home.component';
 import { JobdetailComponent } from './jobdetail/jobdetail.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'about',component:AboutComponent},
   {path:'testimonial',component:TestimonialComponent},  
   {path:'postajob',  canActivate: [RoleGuard], component:JobpostingComponent,data: {   role: 'user_faculty' }},
+  {path:'editPost',  canActivate: [RoleGuard], component:EditPostComponent,data: {   role: 'user_faculty' }},  
   {path:'jobdetail', component:JobdetailComponent,
 children:[{path:'applynow', canActivate: [RoleGuard], component:ApplynowComponent,data: {   role: 'user_alumni' }}]},
   {path:'myjobs',  canActivate: [RoleGuard],component:JoblistingComponent,data: {   role: 'user_faculty' }},
