@@ -344,6 +344,49 @@ app.post('/addJob',verifyToken, function(req,res){
         res.status(400).send('adding new job failed');
     });
 })
+app.post('/editPost',verifyToken, function(req,res){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
+  id  = req.body.item._id;
+  var jobs = {
+      companyName:req.body.item.companyName ,
+      jobRole: req.body.item.jobRole, 
+      companydetail: req.body.item.companydetail,
+      jobcategory: req.body.item.jobcategory,
+      location: req.body.item.location,
+      experience: req.body.item.experience,
+      skills: req.body.item.skills,
+      qualification: req.body.item.qualification,
+      jobDescription: req.body.item.jobDescription,
+      lastDate: req.body.item.lastDate,
+      jobType: req.body.item.jobType,
+      verified:0
+
+  }
+
+  var job = new Postjob(jobs)
+  Postjob.findByIdAndUpdate({"_id":id},{$set:{
+    "companyName":companyName ,
+    "jobRole": jobRole, 
+    "companydetail": companydetail,
+    "jobcategory": jobcategory,
+    "location": location,
+    "experience": experience,
+    "skills": skills,
+    "qualification": qualification,
+    "jobDescription": jobDescription,
+    "lastDate": lastDate,
+    "jobType": jobType,
+    "verified":0
+    }})
+  .then(job => {
+      
+      res.status(200).json({'job': 'Job edited successfully'});
+  })
+  .catch(err => {
+      res.status(400).send('editing job failed');
+  });
+})
 app.get('/jobdetail/:id',(req, res) => {
   id  = req.params.id;
     Postjob.findById({"_id":id})
