@@ -29,14 +29,26 @@
                         Please enter job role
                     </div>
                 </div>
-                <div class="col-12 col-sm-6">           
-                    <input type="text" name="companydetail"  [(ngModel)]="jobItems.companydetail" #companydetail="ngModel"  class="form-control" placeholder="companydetails" [class.is-invalid]="companydetail.invalid && joppostForm.submitted" required>
+                <div class="col-12 col-sm-6">  
+                    <label>Company Details</label>
+                    <ckeditor id="companydetail" [config]="editorConfig"
+                    name="companydetail"  [(ngModel)]="jobItems.companydetail"  #companydetail="ngModel"  class="form-control" [class.is-invalid]="companydetail.invalid && joppostForm.submitted" required>
+			        </ckeditor>   
                     <div class="invalid-feedback">
                         Please enter company details
                     </div>
                 </div>
+                <div class="col-12 col-sm-6">   
+                    <label>Job description</label>
+                    <ckeditor
+                    name="jobDescription" [config]="editorConfig" [(ngModel)]="jobItems.jobDescription" #jobDescription="ngModel" class="form-control mytextarea" [class.is-invalid]="jobDescription.invalid && joppostForm.submitted" required>
+			        </ckeditor>          
+                    <div class="invalid-feedback">
+                        Job description required
+                    </div>
+                </div>
                 <div class="col-12 col-sm-6"> 
-                    <select name="jobcategory" [(ngModel)]="jobItems.jobcategory" #jobcategory="ngModel"  class="form-control" placeholder="Job Category" [class.is-invalid]="jobcategory.invalid && joppostForm.submitted" required>
+                    <select name="jobcategory" [(ngModel)]="jobItems.jobcategory" #jobcategory="ngModel"  class="form-control select" placeholder="Job Category" [class.is-invalid]="jobcategory.invalid && joppostForm.submitted" required>
                         <option value="" selected>Job category</option>
                         <option value="DataScience">Data Science</option>
                         <option value="CyberSecurity">Cyber Security</option>
@@ -73,12 +85,6 @@
                     <input type="text" name="education"  [(ngModel)]="jobItems.qualification" #education="ngModel"  class="form-control" placeholder="Qualification" [class.is-invalid]="education.invalid && joppostForm.submitted" required>
                     <div class="invalid-feedback">
                         Please enter required qualification
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">           
-                    <input type="text" name="jobDescription" [(ngModel)]="jobItems.jobDescription" #jobDescription="ngModel" class="form-control" placeholder="Description" [class.is-invalid]="jobDescription.invalid && joppostForm.submitted" required>
-                    <div class="invalid-feedback">
-                        Job description required
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">           

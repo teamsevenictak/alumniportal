@@ -28,56 +28,56 @@
         <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Explore By Category</h1>
         <div class="row g-4">
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4"  routerLink="/joblisting/DataScience">
                     <i class="fa fa-3x fa-mail-bulk text-primary mb-4"></i>
                     <h4 class="mb-3">Data Science</h4>
                     <p class="mb-0"><a routerLink="/joblisting/DataScience">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/CyberSecurity">
                     <i class="fa fa-3x fa-headset text-primary mb-4"></i>
                     <h4 class="mb-3">Cyber Security</h4>
                     <p class="mb-0"><a routerLink="/joblisting/CyberSecurity">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/HumanResource">
                     <i class="fa fa-3x fa-user-tie text-primary mb-4"></i>
                     <h4 class="mb-3">Human Resource</h4>
                     <p class="mb-0"><a routerLink="/joblisting/HumanResource">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/ProjectManagement">
                     <i class="fa fa-3x fa-tasks text-primary mb-4"></i>
                     <h4 class="mb-3">Project Management</h4>
                     <p class="mb-0"><a routerLink="/joblisting/ProjectManagement">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/Fullstack">
                     <i class="fa fa-3x fa-chart-line text-primary mb-4"></i>
                     <h4 class="mb-3">Full stack Development</h4>
                     <p class="mb-0"><a routerLink="/joblisting/Fullstack">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4"  routerLink="/joblisting/SoftwareTesting">
                     <i class="fa fa-3x fa-hands-helping text-primary mb-4"></i>
                     <h4 class="mb-3">Software Testing</h4>
                     <p class="mb-0"><a routerLink="/joblisting/SoftwareTesting">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/RoboticsProcess">
                     <i class="fa fa-3x fa-book-reader text-primary mb-4"></i>
                     <h6 class="mb-3">Robotics Process Automation</h6>
                     <p class="mb-0"><a routerLink="/joblisting/RoboticsProcess">View Jobs</a></p>
                 </a>
             </div>
             <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                <a class="cat-item rounded p-4" href="">
+                <a class="cat-item rounded p-4" routerLink="/joblisting/DesignCreative">
                     <i class="fa fa-3x fa-drafting-compass text-primary mb-4"></i>
                     <h4 class="mb-3">Design & Creative</h4>
                     <p class="mb-0"><a routerLink="/joblisting/DesignCreative">View Jobs</a></p>
@@ -135,17 +135,17 @@
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <i><b>{{i.companyName}}</b></i><!-- <img class="flex-shrink-0 img-fluid border rounded" src="../../assets/img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;"> -->
                                 <div class="text-start ps-4">
-                                    <h5 class="mb-3">{{i.jobRole}}</h5>
+                                    <h2 class="mb-3">{{i.jobRole}}</h2>
                                     <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{i.location}}</span>
                                     <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{i.jobType}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-briefcase text-primary me-2"></i>{{i.experience}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-trophy text-primary me-2"></i>{{i.qualification}}</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-lightbulb text-primary me-2"></i>{{i.skills}}</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-briefcase text-primary me-2"></i>{{i.experience}} Years</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-trophy text-primary me-2"></i>{{i.qualification}}</span>
+                                    <span class="text-truncate me-3"><i class="fa fa-lightbulb text-primary me-2"></i>{{i.skills}}</span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-3">
-                                    <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
+                                    <a class="btn btn-light btn-square me-3" href=""></a>
                                     <a class="btn btn-primary" (click)="viewDetail(i)">View Details</a>
                                 </div>
                                 <span class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Last Date:{{i.lastDate}}</span>

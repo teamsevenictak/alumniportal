@@ -4,12 +4,23 @@ import { JobpostingService } from '../jobposting.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { DatePipe } from '@angular/common';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 @Component({
   selector: 'app-jobposting',
   templateUrl: './jobposting.component.html',
   styleUrls: ['./jobposting.component.css']
 })
 export class JobpostingComponent implements OnInit {
+  public editorConfig = {
+		toolbar: [
+			[ 'Styles', 'Format', 'Font', 'FontSize' ],
+			[ 'Bold', 'Italic' ],
+			[ 'Undo', 'Redo' ],
+			[ 'About' ],
+		],
+    placeholder : 'some value',
+    autoParagraph: false,
+	}
 
   title:String = "Post a New Job";
    jobItems = new JobPostingModel("","","","","",0,"","","","","","",0);

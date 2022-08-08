@@ -21,7 +21,7 @@
             <a routerLink="contact" class="nav-item nav-link">Contact</a>
         </div>
         <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" type="submit" routerLink="/" (click)="logoutUser()"  *ngIf="_auth.loggedIn()">Logout</a>
-        <a routerLink="/login" class="px-5" *ngIf="!_auth.loggedIn()">Login</a>
+        <a routerLink="/login" class="px-5" *ngIf="!_auth.loggedIn()"><b>Login</b></a>
         <a routerLink="/signup" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" *ngIf="!_auth.loggedIn()">Sign Up<i class="fa fa-arrow-right ms-3"></i></a>
     </div>
 </nav>
